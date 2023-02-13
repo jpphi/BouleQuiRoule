@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 40aef21d5be97044aa9e94706c71302f
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - _scoreText: {fileID: 8057343998451487922, guid: 0256f5f8c8b12084a944cfc31142c53b, type: 3}
+  - _arbre: {fileID: 8241269057746280033, guid: 0f4f13b233413ef4eb7630a9e431744b, type: 3}
+  - _player: {fileID: 2472624905697260548, guid: 0d522dccbaa8ea342b905bbb1c23d00c, type: 3}
+  - _proix: {fileID: 8526240394462175678, guid: 2bd859ec2f6f34247832e7658fc0cc5e, type: 3}
+  - _scenario: {fileID: 11400000, guid: 3370110c96a29dc408e13a3f0bf46fa8, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
