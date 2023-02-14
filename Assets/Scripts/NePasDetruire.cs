@@ -5,14 +5,17 @@ using UnityEngine;
 public class NePasDetruire : MonoBehaviour
 {
     // Start is called before the first frame update
-    void Awake()
+    public static NePasDetruire instance;
+    private void Awake()
     {
-        //DontDestroyOnLoad(this.gameObject);
+        if (instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        instance = this;
+        DontDestroyOnLoad(gameObject);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

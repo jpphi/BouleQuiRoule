@@ -3,8 +3,8 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
-using static UnityEditor.PlayerSettings;
-using UnityEngine.UIElements;
+//using static UnityEditor.PlayerSettings;
+//using UnityEngine.UIElements;
 
 public class Player : MonoBehaviour
 {
@@ -21,7 +21,20 @@ public class Player : MonoBehaviour
 
     //private bool tour1 = true;
 
-    Scene _scene;
+    public Scene _scene;
+
+    public static Player instance;
+    //private void Awake()
+    //{
+    //    if (instance != null)
+    //    {
+    //        Destroy(gameObject);
+    //        return;
+    //    }
+
+    //    instance = this;
+    //    DontDestroyOnLoad(gameObject);
+    //}
 
     void Start()
     {
@@ -59,6 +72,8 @@ public class Player : MonoBehaviour
                 //    "  _scenario.rotation.Count= " + _scenario.rotation.Count);
                 _scenario.chargementObjet(_proix, _scenario.position[i], _scenario.rotation[i]);
             }
+
+            //_scenario.chargementObjet(NePasDetruire.instance.gameObject, new Vector3(0,5,0), Quaternion.identity);
         }
 
     }
@@ -121,12 +136,12 @@ public class Player : MonoBehaviour
         PlayerPrefs.SetString("_score", "Score: " + ScoreValue);
         _scoreText.text = PlayerPrefs.GetString("_score");
 
-        Debug.Log("updateScore après ++ " + ScoreValue);
+        //Debug.Log("updateScore après ++ " + ScoreValue);
         if(ScoreValue== 8)
         {
             SceneManager.LoadScene("Level_2");
-            //Debug.Log("Chargement de la scene 2.  SceneManager.GetActiveScene()" + SceneManager.GetActiveScene().name + " " + 
-            //    SceneManager.GetActiveScene().buildIndex);
+            Debug.Log("Chargement de la scene 2.  SceneManager.GetActiveScene()" + SceneManager.GetActiveScene().name + " " +
+                SceneManager.GetActiveScene().buildIndex);
         }
     }
 }
