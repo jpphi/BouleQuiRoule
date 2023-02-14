@@ -131,5 +131,7 @@ MonoBehaviour:
   _speed: 100
   _arbre: {fileID: 8241269057746280033, guid: 0f4f13b233413ef4eb7630a9e431744b, type: 3}
   _player: {fileID: 2472624905697260548}
-  _proix: {fileID: 8526240394462175678, guid: 2bd859ec2f6f34247832e7658fc0cc5e, type: 3}
+  _proie: {fileID: 8526240394462175678, guid: 2bd859ec2f6f34247832e7658fc0cc5e, type: 3}
   _scenario: {fileID: 11400000, guid: 3370110c96a29dc408e13a3f0bf46fa8, type: 2}
+  _scene:
+    m_Handle: 0

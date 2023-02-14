@@ -109,8 +109,8 @@ GameObject:
   - component: {fileID: 928660513796489349}
   - component: {fileID: 2394489676786362899}
   m_Layer: 0
-  m_Name: Proix
-  m_TagString: Proix
+  m_Name: Proie
+  m_TagString: Proie
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

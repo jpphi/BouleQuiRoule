@@ -35,7 +35,7 @@ public class ScriptableObjectTest : ScriptableObject
 
     public void chargementObjet(GameObject obj, Vector3 pos, Quaternion rot)
     {
-        Debug.Log("Objet chargé en  " + pos + " rotation " + rot);
+        //Debug.Log("Objet chargé en  " + pos + " rotation " + rot);
         Instantiate(obj, pos, rot);
     }
 
