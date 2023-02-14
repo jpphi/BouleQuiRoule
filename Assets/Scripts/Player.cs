@@ -42,7 +42,7 @@ public class Player : MonoBehaviour
 
         _scene = SceneManager.GetActiveScene();
 
-        Debug.Log("La scène active est '" + _scene.name + "'. index= " + _scene.buildIndex);
+        //Debug.Log("La scène active est '" + _scene.name + "'. index= " + _scene.buildIndex);
 
         //_scenario.chargementObjet(_player, new Vector3(0, 3, 0), Quaternion.identity);
         if (_scene.buildIndex == 0)
@@ -57,8 +57,10 @@ public class Player : MonoBehaviour
 
         if (_scene.buildIndex== 1)
         {
+            transform.position = _scenario.positionPlayer;
+
             // On charge les arbres
-            for(int i= 0; i< _scenario.position.Count; i++)
+            for (int i= 0; i< _scenario.position.Count; i++)
             {
                 //Debug.Log("Chargement des arbres. i= " + i + " _scenario.position.Count= " + _scenario.position.Count +
                 //    "  _scenario.rotation.Count= " + _scenario.rotation.Count);
@@ -73,7 +75,6 @@ public class Player : MonoBehaviour
                 _scenario.chargementObjet(_proie, _scenario.position[i], _scenario.rotation[i]);
             }
 
-            //_scenario.chargementObjet(NePasDetruire.instance.gameObject, new Vector3(0,5,0), Quaternion.identity);
         }
 
     }
@@ -139,6 +140,7 @@ public class Player : MonoBehaviour
         //Debug.Log("updateScore après ++ " + ScoreValue);
         if(ScoreValue== 8)
         {
+            _scenario.positionPlayer = transform.position;
             SceneManager.LoadScene("Level_2");
             //Debug.Log("Chargement de la scene 2.  SceneManager.GetActiveScene()" + SceneManager.GetActiveScene().name + " " +
             //    SceneManager.GetActiveScene().buildIndex);

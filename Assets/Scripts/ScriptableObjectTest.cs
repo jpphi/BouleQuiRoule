@@ -17,14 +17,14 @@ public class ScriptableObjectTest : ScriptableObject
     //    public Coordonnees[] _coord;
     public List<Vector3> position;
     public List<Quaternion> rotation;
-    //public int indiceArbre;
-    //public Vector3[] positionArbre;
-    //public Quaternion[] rotationArbre;
+    public Vector3 positionPlayer;
 
     public int taille = 8;
-    //public Quaternion rotation;
 
-    
+    public float tailleMiniX = 0.2f;
+    public float tailleMiniY = 0.2f;
+    public float tailleMiniZ = 0.2f;
+
     public void affichePositionRotation()
     {
         for(int i= 0; i < position.Count; i++)

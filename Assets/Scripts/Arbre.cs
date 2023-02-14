@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Arbre : MonoBehaviour
 {
+    [SerializeField] private ScriptableObjectTest _soArbre;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,12 +19,27 @@ public class Arbre : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("On collision enter tag (GameObject arbre): " + collision.gameObject.tag);
-        if (collision.gameObject.CompareTag("Proie"))
-        {
-            Debug.Log("Arbre touché position = " + transform.position);
-            transform.localScale = new Vector3(transform.localScale.x * 0.9f,
+        Vector3 scale = new Vector3(transform.localScale.x * 0.9f,
                 transform.localScale.y * 0.9f, transform.localScale.z * 0.9f);
+        Vector3 newScale;
+
+        //Debug.Log("On collision enter tag (GameObject arbre): " + collision.gameObject.tag);
+        //Debug.Log("scale: " + transform.localScale);
+        if (collision.gameObject.CompareTag("Proie") || collision.gameObject.CompareTag("Predateur"))
+        {
+            Debug.Log("Arbre touché position = " + transform.position + " sera ajusté à " + scale);
+            Debug.Log("scale mini X = " + _soArbre.tailleMiniX + " scale mini Z " + _soArbre.tailleMiniZ);
+            transform.localScale = scale;
+        }
+
+        if( (scale.x < _soArbre.tailleMiniX) || (scale.y < _soArbre.tailleMiniY) || (scale.z < _soArbre.tailleMiniZ))
+        {
+            Debug.Log("Arbre à détruire = " + transform.position);
+            _soArbre.position.Remove(transform.position);
+            _soArbre.rotation.Remove(transform.rotation);
+            Debug.Log("Longueur list position = " + _soArbre.position.Count);
+
+            Destroy(gameObject);
         }
 
     }
