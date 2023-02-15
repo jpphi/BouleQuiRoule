@@ -11,3 +11,6 @@ Objectif : apprentissage de la persistance des données dans unity via PlayerPre
 Level 1 : Roll a ball initial  
 	Ajout de mur à la place des cibles atteintes   
 Level 2 : Nouvelle Target animé.
+  
+## Voir Game Design Document  
+
