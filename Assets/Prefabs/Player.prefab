@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6765365057386872325}
   - component: {fileID: 1714252878622347944}
   - component: {fileID: 3484727937399665271}
+  - component: {fileID: 2962659708776220826}
   m_Layer: 0
   m_Name: Player
   m_TagString: Predateur
@@ -128,10 +129,40 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _scoreText: {fileID: 8057343998451487922, guid: 0256f5f8c8b12084a944cfc31142c53b, type: 3}
-  _speed: 100
+  _speed: 1000
   _arbre: {fileID: 8241269057746280033, guid: 0f4f13b233413ef4eb7630a9e431744b, type: 3}
   _player: {fileID: 2472624905697260548}
   _proie: {fileID: 8526240394462175678, guid: 2bd859ec2f6f34247832e7658fc0cc5e, type: 3}
   _scenario: {fileID: 11400000, guid: 3370110c96a29dc408e13a3f0bf46fa8, type: 2}
   _scene:
     m_Handle: 0
+--- !u!114 &2962659708776220826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2472624905697260548}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: b581a73bd1385d14b92c21e48faa970d, type: 3}
+  m_NotificationBehavior: 0
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents: []
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Player
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}

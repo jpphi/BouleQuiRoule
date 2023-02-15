@@ -3,6 +3,9 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
+using System.Collections;
+using Unity.VisualScripting;
+using UnityEngine.InputSystem;
 //using static UnityEditor.PlayerSettings;
 //using UnityEngine.UIElements;
 
@@ -17,6 +20,7 @@ public class Player : MonoBehaviour
 
     public PlayerPrefs _score;
 
+
     //private int indice = 0;
 
     //private bool tour1 = true;
@@ -24,6 +28,9 @@ public class Player : MonoBehaviour
     public Scene _scene;
 
     public static Player instance;
+
+    private float mouvx, mouvy;
+
     //private void Awake()
     //{
     //    if (instance != null)
@@ -81,10 +88,21 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetAxis("Horizontal") != 0f || Input.GetAxis("Vertical") != 0f) 
-        {
-            _rigidbody.AddForce(Input.GetAxis("Horizontal") * _speed * Time.fixedDeltaTime, 0f, Input.GetAxis("Vertical") * _speed * Time.fixedDeltaTime);
-        }
+        //if (Input.GetAxis("Horizontal") != 0f || Input.GetAxis("Vertical") != 0f) 
+        //{
+        //    _rigidbody.AddForce(Input.GetAxis("Horizontal") * _speed * Time.fixedDeltaTime, 0f, Input.GetAxis("Vertical") * _speed * Time.fixedDeltaTime);
+        //}
+        _rigidbody.AddForce(mouvx * _speed * Time.fixedDeltaTime, 0f, mouvy * _speed * Time.fixedDeltaTime);
+    }
+
+    public void OnMove(InputValue _input)
+    {
+        mouvx = _input.Get<Vector2>().x;
+        mouvy = _input.Get<Vector2>().y;
+
+        Debug.Log("Input: x= " + mouvx + "Input: y= " + mouvy);
+
+
     }
 
     private void OnTriggerEnter(Collider other)
@@ -130,7 +148,6 @@ public class Player : MonoBehaviour
         }
 
     }
-
     private void updateScore()
     {
         ScoreValue++;

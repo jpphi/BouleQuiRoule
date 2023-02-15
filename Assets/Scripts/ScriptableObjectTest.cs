@@ -25,6 +25,11 @@ public class ScriptableObjectTest : ScriptableObject
     public float tailleMiniY = 0.2f;
     public float tailleMiniZ = 0.2f;
 
+    public int stockNouritureAuDepartArbre = 100;
+    public int stockNouritureAuDepartProie = 100;
+    public int stockNouritureAuDepartPredateur = 100;
+
+
     public void affichePositionRotation()
     {
         for(int i= 0; i < position.Count; i++)
