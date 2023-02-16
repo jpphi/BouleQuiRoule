@@ -9,7 +9,7 @@ public class Proie : MonoBehaviour
     [SerializeField]float Xmin = -10f, Xmax = 10f, Ymin = 0f, Ymax = 1f, Zmin = -10f, Zmax = 10f;
     GameObject _cetObjet;
 
-    [SerializeField] float tictac = 10f;
+    [SerializeField] float tictac = 20f;
     //[SerializeField] int conso = 1;
 
     [SerializeField] private ScriptableObjectTest _soProie;

@@ -36,10 +36,8 @@ public class Arbre : MonoBehaviour
     {
         Vector3 scale = new Vector3(transform.localScale.x * 0.9f, transform.localScale.y * 0.9f, transform.localScale.z * 0.9f);
 
-        scale = (scale.x > _soArbre.tailleMaxiArbre) ? 
-            new Vector3(_soArbre.tailleMaxiArbre, _soArbre.tailleMaxiArbre, _soArbre.tailleMaxiArbre) : scale;
-
-        //Debug.Log("On collision enter tag (GameObject arbre): " + collision.gameObject.tag + " Scale: " + transform.localScale);
+  
+        Debug.Log("On collision enter tag (GameObject arbre): " + collision.gameObject.tag + " Scale: " + transform.localScale);
         if (collision.gameObject.CompareTag("Proie")) // || collision.gameObject.CompareTag("Predateur")
         {
             //Debug.Log("Arbre touché position = " + transform.position + " sera ajusté à " + scale + 
@@ -66,7 +64,9 @@ public class Arbre : MonoBehaviour
         joyeuAnniversaire = true;
 
         Vector3 scale = _soArbre.croissanceArbre * transform.localScale;
-        
+
+        scale = (scale.x > _soArbre.tailleMaxiArbre) ?
+              new Vector3(_soArbre.tailleMaxiArbre, _soArbre.tailleMaxiArbre, _soArbre.tailleMaxiArbre) : scale;
 
         transform.localScale = scale;
 
