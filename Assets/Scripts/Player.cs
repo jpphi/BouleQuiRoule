@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 //using static UnityEditor.PlayerSettings;
 //using UnityEngine.UIElements;
 
@@ -17,6 +18,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float _speed= 100f;
     [SerializeField] private GameObject _arbre, _player, _proie;
     [SerializeField] private ScriptableObjectTest _scenario;
+    [SerializeField] private GameObject _slider;
 
     public PlayerPrefs _score;
 
@@ -30,6 +32,7 @@ public class Player : MonoBehaviour
     public static Player instance;
 
     private float mouvx, mouvy;
+    public float _sliderValue;
 
     //private void Awake()
     //{
@@ -162,5 +165,13 @@ public class Player : MonoBehaviour
             //Debug.Log("Chargement de la scene 2.  SceneManager.GetActiveScene()" + SceneManager.GetActiveScene().name + " " +
             //    SceneManager.GetActiveScene().buildIndex);
         }
+    }
+
+    public void changeVitesse()
+    {
+        Debug.Log("Changement de la vitesse" + _slider.GetComponent<Slider>().value);
+
+        // _scrollbar.GetComponent<Scrollbar>().value
+        _speed= _slider.GetComponent<Slider>().value;  
     }
 }

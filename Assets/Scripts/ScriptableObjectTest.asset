@@ -10,5 +10,5 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bd4553cc0dc69b3419de393ff6f02e59, type: 3}
-  m_Name: New Scriptable Object Test
+  m_Name: ScriptableObjectTest
   m_EditorClassIdentifier: 
