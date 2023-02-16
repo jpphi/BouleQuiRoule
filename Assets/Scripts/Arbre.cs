@@ -6,20 +6,30 @@ using UnityEngine;
 public class Arbre : MonoBehaviour
 {
     [SerializeField] private ScriptableObjectTest _soArbre;
+    [SerializeField] float tempsDePousse = 1f;
 
-    private int stockNouriture;
-  
+    bool joyeuAnniversaire = false;
+
+
     void Start()
     {
         // On va gérer le vieillissement des arbres avec cette variable
-        //stockNouriture = _soArbre.stockNouritureAuDepartArbre;
-    
+        StartCoroutine(OnPousse());
+
+
     }
 
     // Update is called once per frame
     void Update()
     {
-       
+        if (joyeuAnniversaire)
+        {
+            joyeuAnniversaire = false;
+            StartCoroutine(OnPousse());
+            //Debug.Log("Joyeux Anniv! ");
+        }
+
+
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -34,7 +44,7 @@ public class Arbre : MonoBehaviour
             transform.localScale = scale;
         }
 
-        if( (scale.x < _soArbre.tailleMiniX) || (scale.y < _soArbre.tailleMiniY) || (scale.z < _soArbre.tailleMiniZ))
+        if( (scale.x < _soArbre.tailleMiniXArbre) || (scale.y < _soArbre.tailleMiniYArbre) || (scale.z < _soArbre.tailleMiniZArbre))
         {
             //Debug.Log("Arbre à détruire = " + transform.position);
             _soArbre.position.Remove(transform.position);
@@ -45,5 +55,20 @@ public class Arbre : MonoBehaviour
         }
     }
 
-    
+
+    private IEnumerator OnPousse()
+    {
+        yield return new WaitForSeconds(tempsDePousse);
+
+        joyeuAnniversaire = true;
+
+        Vector3 scale = _soArbre.croissanceArbre * transform.localScale;
+
+        transform.localScale = scale;
+
+    }
+
+
+
+
 }

@@ -21,9 +21,11 @@ public class ScriptableObjectTest : ScriptableObject
 
     public int taille = 8;
 
-    public float tailleMiniX = 0.2f;
-    public float tailleMiniY = 0.2f;
-    public float tailleMiniZ = 0.2f;
+    public float tailleMiniXArbre = 0.2f;
+    public float tailleMiniYArbre = 0.2f;
+    public float tailleMiniZArbre = 0.2f;
+
+    public float croissanceArbre = 1.15f;
 
     public float tailleMiniXProie = 0.2f;
     public float tailleMiniYProie = 0.2f;

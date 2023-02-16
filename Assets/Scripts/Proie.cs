@@ -10,14 +10,12 @@ public class Proie : MonoBehaviour
     GameObject _cetObjet;
 
     [SerializeField] float tictac = 1f;
-    [SerializeField] int conso = 1;
+    //[SerializeField] int conso = 1;
 
     [SerializeField] private ScriptableObjectTest _soProie;
 
 
     bool joyeuAnniversaire = false;
-
-    int stockNouriture;
 
     private void Start()
     {
@@ -45,23 +43,13 @@ public class Proie : MonoBehaviour
     {
         yield return new WaitForSeconds(tictac);
 
-        //stockNouriture -= conso;
         joyeuAnniversaire = true;
-
-        //if(stockNouriture<=0)
-        //{
-        //    Debug.Log("Nouriture épuisée ! Objet détruit !" + stockNouriture);
-        //    Destroy(gameObject);
-        //}
 
         Vector3 scale= _soProie.decroissanceProie * transform.localScale;
 
-        if ((scale.x < _soProie.tailleMiniX) || (scale.y < _soProie.tailleMiniY) || (scale.z < _soProie.tailleMiniZ))
+        if ((scale.x < _soProie.tailleMiniXProie) || (scale.y < _soProie.tailleMiniYProie) || (scale.z < _soProie.tailleMiniZProie))
         {
             //Debug.Log("Proie à détruire = " + transform.position);
-            //_soProie.position.Remove(transform.position);
-            //_soProie.rotation.Remove(transform.rotation);
-            //Debug.Log("Longueur list position = " + _soArbre.position.Count);
 
             Destroy(gameObject);
         }
@@ -75,17 +63,14 @@ public class Proie : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        //Vector3 decroissance = new Vector3(transform.localScale.x * 0.9f, transform.localScale.y * 0.9f, transform.localScale.z * 0.9f);
-        //Vector3  = new Vector3(transform.localScale.x * 1.1f, transform.localScale.y * 1.1f, transform.localScale.z * 1.1f);
-        Vector3 croissance = _soProie.croissanceProie * transform.localScale;
 
-        Debug.Log("On collision dans Proie " + collision.gameObject.tag);
-
-        //Debug.Log("On collision enter tag (GameObject arbre): " + collision.gameObject.tag + " Scale: " + transform.localScale);
+        //Debug.Log("On collision dans Proie. Collision avec " + collision.gameObject.tag + " Scale: " + transform.localScale);
         if (collision.gameObject.CompareTag("Arbre"))
         {
-            Debug.Log("Arbre touché position = " + transform.position + " Taille de la proie sera ajusté à " + croissance);
-            Debug.Log("scale mini X = " + _soProie.tailleMiniXProie + " scale mini Z " + _soProie.tailleMiniZProie);
+            Vector3 croissance = _soProie.croissanceProie * transform.localScale;
+
+            //Debug.Log("Arbre touché position = " + transform.position + " Taille de la proie sera ajusté à " + croissance);
+            //Debug.Log("scale mini X = " + _soProie.tailleMiniXProie + " scale mini Z " + _soProie.tailleMiniZProie);
             transform.localScale = croissance;
         }
 
