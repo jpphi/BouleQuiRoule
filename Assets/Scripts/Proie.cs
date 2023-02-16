@@ -75,14 +75,21 @@ public class Proie : MonoBehaviour
         {
             Vector3 croissance = _soProie.croissanceProie * transform.localScale;
 
-            croissance = (croissance.x >_soProie.tailleMaxiProie)? 
-                new Vector3(_soProie.tailleMaxiProie, _soProie.tailleMaxiProie, _soProie.tailleMaxiProie) : croissance;
+            if(croissance.x > _soProie.tailleMaxiProie)
+            {
+                transform.localScale = new Vector3(1, 1, 1);
+                Instantiate(gameObject,transform.position, transform.rotation);
 
+            }
+            else
+            {
+                //Debug.Log("Arbre touché position = " + transform.position + " Taille de la proie sera ajusté à " + croissance);
+                //Debug.Log("scale mini X = " + _soProie.tailleMiniXProie + " scale mini Z " + _soProie.tailleMiniZProie);
+                transform.localScale = croissance;
+                //changeMasse(croissance.x);
 
-            //Debug.Log("Arbre touché position = " + transform.position + " Taille de la proie sera ajusté à " + croissance);
-            //Debug.Log("scale mini X = " + _soProie.tailleMiniXProie + " scale mini Z " + _soProie.tailleMiniZProie);
-            transform.localScale = croissance;
-            //changeMasse(croissance.x);
+            }
+
         }
 
     }
@@ -90,7 +97,9 @@ public class Proie : MonoBehaviour
     private void changeMasse(float echelle)
     {
         float masse = transform.GetComponent<Rigidbody>().mass;
-        masse*= echelle * echelle;
+        masse*= echelle;
+
+        Debug.Log("Changement de la masse= " + masse + " Echelle= " + echelle);
         transform.GetComponent<Rigidbody>().mass = masse;
     }
 

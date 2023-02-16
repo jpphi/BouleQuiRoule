@@ -32,7 +32,7 @@ public class ScriptableObjectTest : ScriptableObject
     public float tailleMiniXProie = 0.2f;
     public float tailleMiniYProie = 0.2f;
     public float tailleMiniZProie = 0.2f;
-    public float tailleMaxiProie = 5f;
+    public float tailleMaxiProie = 2f;
 
     public float decroissanceProie = 0.9f;
     public float croissanceProie =1.15f;
