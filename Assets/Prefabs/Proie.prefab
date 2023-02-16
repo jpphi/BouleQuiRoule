@@ -106,8 +106,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1675483918580674645}
-  - component: {fileID: 928660513796489349}
   - component: {fileID: 2394489676786362899}
+  - component: {fileID: 8868535992832743081}
   m_Layer: 0
   m_Name: Proie
   m_TagString: Proie
@@ -131,24 +131,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &928660513796489349
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8526240394462175678}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c14d237ec4237444f9c980c97c250fbe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Xmin: -10
-  Xmax: 10
-  Ymin: 0
-  Ymax: 2
-  Zmin: -10
-  Zmax: 10
 --- !u!54 &2394489676786362899
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -165,3 +147,24 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &8868535992832743081
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8526240394462175678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c14d237ec4237444f9c980c97c250fbe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Xmin: -10
+  Xmax: 10
+  Ymin: 0
+  Ymax: 1
+  Zmin: -10
+  Zmax: 10
+  tictac: 1
+  conso: 1
+  _soProie: {fileID: 11400000, guid: 3370110c96a29dc408e13a3f0bf46fa8, type: 2}

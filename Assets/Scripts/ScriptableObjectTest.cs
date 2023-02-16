@@ -25,8 +25,15 @@ public class ScriptableObjectTest : ScriptableObject
     public float tailleMiniY = 0.2f;
     public float tailleMiniZ = 0.2f;
 
+    public float tailleMiniXProie = 0.2f;
+    public float tailleMiniYProie = 0.2f;
+    public float tailleMiniZProie = 0.2f;
+
+    public float decroissanceProie = 0.9f;
+    public float croissanceProie =1.15f;
+
     public int stockNouritureAuDepartArbre = 100;
-    public int stockNouritureAuDepartProie = 100;
+    public int stockNouritureAuDepartProie = 10;
     public int stockNouritureAuDepartPredateur = 100;
 
 

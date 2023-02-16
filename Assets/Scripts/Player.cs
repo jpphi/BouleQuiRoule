@@ -52,7 +52,8 @@ public class Player : MonoBehaviour
 
         _scene = SceneManager.GetActiveScene();
 
-        //Debug.Log("La scène active est '" + _scene.name + "'. index= " + _scene.buildIndex);
+        //Debug.Log("La scène active est '" + _scene.name + "'. index= " + _scene.buildIndex +
+        //    " Vitesse = " + _speed);
 
         //_scenario.chargementObjet(_player, new Vector3(0, 3, 0), Quaternion.identity);
         if (_scene.buildIndex == 0)
@@ -103,7 +104,7 @@ public class Player : MonoBehaviour
         mouvx = _input.Get<Vector2>().x;
         mouvy = _input.Get<Vector2>().y;
 
-        Debug.Log("Input: x= " + mouvx + "Input: y= " + mouvy);
+        //Debug.Log("Input: x= " + mouvx + "Input: y= " + mouvy);
 
 
     }
@@ -169,7 +170,7 @@ public class Player : MonoBehaviour
 
     public void changeVitesse()
     {
-        Debug.Log("Changement de la vitesse" + _slider.GetComponent<Slider>().value);
+        //Debug.Log("Changement de la vitesse" + _slider.GetComponent<Slider>().value);
 
         // _scrollbar.GetComponent<Scrollbar>().value
         _speed= _slider.GetComponent<Slider>().value;  

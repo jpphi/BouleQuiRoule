@@ -225,7 +225,7 @@ GameObject:
   - component: {fileID: 6601821271535505815}
   m_Layer: 0
   m_Name: Arbre
-  m_TagString: Untagged
+  m_TagString: Arbre
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

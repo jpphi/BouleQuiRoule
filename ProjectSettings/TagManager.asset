@@ -8,6 +8,7 @@ TagManager:
   - Target_Trigger
   - Proie
   - Predateur
+  - Arbre
   layers:
   - Default
   - TransparentFX
