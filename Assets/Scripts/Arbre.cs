@@ -6,7 +6,7 @@ using UnityEngine;
 public class Arbre : MonoBehaviour
 {
     [SerializeField] private ScriptableObjectTest _soArbre;
-    [SerializeField] float tempsDePousse = 1f;
+    [SerializeField] float tempsDePousse = 4f;
 
     bool joyeuAnniversaire = false;
 
@@ -36,6 +36,9 @@ public class Arbre : MonoBehaviour
     {
         Vector3 scale = new Vector3(transform.localScale.x * 0.9f, transform.localScale.y * 0.9f, transform.localScale.z * 0.9f);
 
+        scale = (scale.x > _soArbre.tailleMaxiArbre) ? 
+            new Vector3(_soArbre.tailleMaxiArbre, _soArbre.tailleMaxiArbre, _soArbre.tailleMaxiArbre) : scale;
+
         //Debug.Log("On collision enter tag (GameObject arbre): " + collision.gameObject.tag + " Scale: " + transform.localScale);
         if (collision.gameObject.CompareTag("Proie")) // || collision.gameObject.CompareTag("Predateur")
         {
@@ -63,6 +66,7 @@ public class Arbre : MonoBehaviour
         joyeuAnniversaire = true;
 
         Vector3 scale = _soArbre.croissanceArbre * transform.localScale;
+        
 
         transform.localScale = scale;
 

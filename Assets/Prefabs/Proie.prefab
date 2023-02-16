@@ -124,7 +124,7 @@ Transform:
   m_GameObject: {fileID: 8526240394462175678}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8861939176155396724}
@@ -166,5 +166,4 @@ MonoBehaviour:
   Zmin: -10
   Zmax: 10
   tictac: 1
-  conso: 1
   _soProie: {fileID: 11400000, guid: 3370110c96a29dc408e13a3f0bf46fa8, type: 2}

@@ -61,6 +61,7 @@ public class Player : MonoBehaviour
             // On s'assure que les listes sont vides
             _scenario.position.Clear();
             _scenario.rotation.Clear();
+            _scenario.scale.Clear();
             _scoreText.text = PlayerPrefs.GetString("_score", "Score: " + ScoreValue);
             //Debug.Log("_scoreText.text= " + _scoreText.text);
         }
@@ -97,6 +98,11 @@ public class Player : MonoBehaviour
         //    _rigidbody.AddForce(Input.GetAxis("Horizontal") * _speed * Time.fixedDeltaTime, 0f, Input.GetAxis("Vertical") * _speed * Time.fixedDeltaTime);
         //}
         _rigidbody.AddForce(mouvx * _speed * Time.fixedDeltaTime, 0f, mouvy * _speed * Time.fixedDeltaTime);
+
+        if(transform.position.y <= -2)
+        {
+            transform.position= new Vector3(0,5,0);
+        }
     }
 
     public void OnMove(InputValue _input)

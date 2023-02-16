@@ -16,6 +16,7 @@ public class ScriptableObjectTest : ScriptableObject
     float test;
     //    public Coordonnees[] _coord;
     public List<Vector3> position;
+    public List<Vector3> scale;
     public List<Quaternion> rotation;
     public Vector3 positionPlayer;
 
@@ -24,12 +25,14 @@ public class ScriptableObjectTest : ScriptableObject
     public float tailleMiniXArbre = 0.2f;
     public float tailleMiniYArbre = 0.2f;
     public float tailleMiniZArbre = 0.2f;
+    public float tailleMaxiArbre = 5f;
 
-    public float croissanceArbre = 1.15f;
+    public float croissanceArbre = 1.05f;
 
     public float tailleMiniXProie = 0.2f;
     public float tailleMiniYProie = 0.2f;
     public float tailleMiniZProie = 0.2f;
+    public float tailleMaxiProie = 5f;
 
     public float decroissanceProie = 0.9f;
     public float croissanceProie =1.15f;

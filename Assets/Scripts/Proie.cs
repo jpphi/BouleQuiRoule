@@ -9,7 +9,7 @@ public class Proie : MonoBehaviour
     [SerializeField]float Xmin = -10f, Xmax = 10f, Ymin = 0f, Ymax = 1f, Zmin = -10f, Zmax = 10f;
     GameObject _cetObjet;
 
-    [SerializeField] float tictac = 1f;
+    [SerializeField] float tictac = 10f;
     //[SerializeField] int conso = 1;
 
     [SerializeField] private ScriptableObjectTest _soProie;
@@ -31,6 +31,11 @@ public class Proie : MonoBehaviour
             joyeuAnniversaire = false;
             StartCoroutine(OhVieillir());
             //Debug.Log("Joyeux Anniv! ");
+        }
+
+        if(transform.position.y <= -2)
+        {
+            transform.position = new Vector3(0, 5, 0);
         }
 
         //transform.position += new Vector3(Random.Range(-0.1f, 0.1f), 0, Random.Range(-0.1f, 0.1f));
@@ -56,6 +61,7 @@ public class Proie : MonoBehaviour
         else
         {
             transform.localScale = scale;
+            //changeMasse(scale.x);
         }
 
     }
@@ -69,11 +75,23 @@ public class Proie : MonoBehaviour
         {
             Vector3 croissance = _soProie.croissanceProie * transform.localScale;
 
+            croissance = (croissance.x >_soProie.tailleMaxiProie)? 
+                new Vector3(_soProie.tailleMaxiProie, _soProie.tailleMaxiProie, _soProie.tailleMaxiProie) : croissance;
+
+
             //Debug.Log("Arbre touché position = " + transform.position + " Taille de la proie sera ajusté à " + croissance);
             //Debug.Log("scale mini X = " + _soProie.tailleMiniXProie + " scale mini Z " + _soProie.tailleMiniZProie);
             transform.localScale = croissance;
+            //changeMasse(croissance.x);
         }
 
+    }
+
+    private void changeMasse(float echelle)
+    {
+        float masse = transform.GetComponent<Rigidbody>().mass;
+        masse*= echelle * echelle;
+        transform.GetComponent<Rigidbody>().mass = masse;
     }
 
 
