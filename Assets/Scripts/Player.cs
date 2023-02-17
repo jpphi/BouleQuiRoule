@@ -1,15 +1,16 @@
 //using System.Collections;
 //using System.Collections.Generic;
+//using System.Collections;
+//using Unity.VisualScripting;
+//using static UnityEditor.PlayerSettings;
+//using static UnityEditor.PlayerSettings;
+//using UnityEngine.UIElements;
+
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
-using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
-using static UnityEditor.PlayerSettings;
-//using static UnityEditor.PlayerSettings;
-//using UnityEngine.UIElements;
 
 public class Player : MonoBehaviour
 {
@@ -23,28 +24,12 @@ public class Player : MonoBehaviour
 
     public PlayerPrefs _score;
 
-    //private int indice = 0;
-
-    //private bool tour1 = true;
-
     public Scene _scene;
 
     public static Player instance;
 
     private float mouvx, mouvy;
     public float _sliderValue;
-
-    //private void Awake()
-    //{
-    //    if (instance != null)
-    //    {
-    //        Destroy(gameObject);
-    //        return;
-    //    }
-
-    //    instance = this;
-    //    DontDestroyOnLoad(gameObject);
-    //}
 
     void Start()
     {
@@ -59,16 +44,12 @@ public class Player : MonoBehaviour
         if (_scene.buildIndex == 0)
         {
             // On s'assure que les listes sont vides
-            //_scenario.position.Clear();
-            //_scenario.rotation.Clear();
-
             _scenario.caracteristiqueArbre.Clear();
             _scenario.caracteristiqueProie.Clear();
             //Debug.Log("Level 1, aprés clear de caracteristique arbre caracteristiqueArbre.Count= " + _scenario.caracteristiqueArbre.Count);
 
-            //_scenario.scale.Clear();
-            PlayerPrefs.SetString("_score", "Score: " + ScoreValue);
-            //_scoreText.text = PlayerPrefs.GetString("Score : " + ScoreValue);
+            //PlayerPrefs.SetString("_score", "Score: " + ScoreValue);
+            _scoreText.text = PlayerPrefs.GetString("Score : " + ScoreValue);
             //Debug.Log("_scoreText.text= " + _scoreText.text);
         }
 
@@ -76,7 +57,6 @@ public class Player : MonoBehaviour
         if (_scene.buildIndex== 1)
         {
             transform.position = _scenario.positionPlayer;
-
 
             // On charge les arbres
             _scenario.retabliForet(_arbre);
@@ -89,18 +69,6 @@ public class Player : MonoBehaviour
 
             }
             _scenario.lancerLesProies(_proie);
-
-            // Les proix créer doivent avoir un numero d'identification
-
-            //for (int i = 0; i < _scenario.position.Count; i++)
-            //{
-            //    //Debug.Log("Chargement des arbres. i= " + i + " _scenario.position.Count= " + _scenario.position.Count +
-            //    //    "  _scenario.rotation.Count= " + _scenario.rotation.Count);
-            //    //_scenario.chargementObjet(_proie, _scenario.position[i], _scenario.rotation[i]);
-            //    _scenario.chargementObjet(_proie, new Vector3(Random.Range(-10f,10f), Random.Range(1f, 5f), 
-            //        Random.Range(-10f, 10f)), Quaternion.identity);
-            //}
-
         }
 
     }
@@ -129,19 +97,12 @@ public class Player : MonoBehaviour
         mouvy = _input.Get<Vector2>().y;
 
         //Debug.Log("Input: x= " + mouvx + "Input: y= " + mouvy);
-
-
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Target_Trigger"))
         {
-
-            ///_scenario.position.Add(other.transform.position);
-            ///_scenario.rotation.Add(other.transform.rotation);
-            ///Instantiate(_arbre, other.transform.position, other.transform.rotation);
-
             //Debug.Log("Target_Trigger touché position = " + other.transform.position);
 
             _scenario.chargementObjet(_arbre, other.transform.position, other.transform.rotation);
@@ -157,18 +118,12 @@ public class Player : MonoBehaviour
         // Debug.Log("On collision enter tag: " + collision.gameObject.tag);
         if (collision.gameObject.CompareTag("Target") || collision.gameObject.CompareTag("Proie"))
         {
-            ///_scenario.position.Add(collision.transform.position);
-            ///_scenario.rotation.Add(collision.transform.rotation);
-            ///Instantiate(_arbre, collision.transform.position, collision.transform.rotation);
-
             //Debug.Log("Target touché position = " + collision.transform.position);
 
             _scenario.chargementObjet(_arbre, collision.transform.position, collision.transform.rotation);
 
             Destroy(collision.gameObject);
-            //_scenario.indiceArbre++;
 
-            //_scenario.affichePositionRotation();
             updateScore();
         }
 
@@ -200,5 +155,6 @@ public class Player : MonoBehaviour
     private void OnApplicationQuit()
     {
         // Détruire la clé PlayerPref
+        PlayerPrefs.DeleteKey("_score");
     }
 }

@@ -82,10 +82,6 @@ public class Proie : MonoBehaviour
             {
                 transform.localScale = new Vector3(1, 1, 1);
                 _soProie.chargementObjet(gameObject, transform.position, transform.rotation);
-                //Instantiate(gameObject,transform.position, transform.rotation);
-                //_soProie.position.Add(transform.position);
-                //_soProie.rotation.Add(transform.rotation);
-
             }
             else
             {

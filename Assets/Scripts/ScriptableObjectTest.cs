@@ -58,6 +58,7 @@ public class ScriptableObjectTest : ScriptableObject
     public float tailleMiniZProie = 0.2f;
     public float tailleMaxiProie = 2f;
     public int maxProie = 200;
+    public int nombreDeProie = 0;
 
     public float decroissanceProie = 0.9f;
     public float croissanceProie =1.15f;
@@ -88,6 +89,8 @@ public class ScriptableObjectTest : ScriptableObject
                 position = pos,
                 rotation = rot,
             });
+
+            nombreDeProie++;
         }
         if (obj.CompareTag("Arbre"))
         {
@@ -146,12 +149,17 @@ public class ScriptableObjectTest : ScriptableObject
                 break;
             }
         }
+    }
 
+    public void uneProieMeurt()
+    {
+        nombreDeProie--;
     }
 
     public void lancerLesProies(GameObject proie)
     {
-        for (int i = 0; (i < caracteristiqueProie.Count) && (i < maxProie); i++)
+        //  caracteristiqueProie.Count
+        for (int i = 0; (i < nombreDeProie) && (i < maxProie); i++)
         {
             Instantiate(proie, caracteristiqueProie[i].position, caracteristiqueProie[i].rotation);
         }
