@@ -7,6 +7,7 @@ using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using static UnityEditor.PlayerSettings;
 //using static UnityEditor.PlayerSettings;
 //using UnityEngine.UIElements;
 
@@ -59,8 +60,12 @@ public class Player : MonoBehaviour
         if (_scene.buildIndex == 0)
         {
             // On s'assure que les listes sont vides
-            _scenario.position.Clear();
-            _scenario.rotation.Clear();
+            //_scenario.position.Clear();
+            //_scenario.rotation.Clear();
+            
+            _scenario.caracteristiqueProies.Clear();
+
+
             //_scenario.scale.Clear();
             //_scoreText.text = PlayerPrefs.GetString("_score", "Score: " + ScoreValue);
             _scoreText.text = PlayerPrefs.GetString("Score : " + ScoreValue);
@@ -72,21 +77,26 @@ public class Player : MonoBehaviour
         {
             transform.position = _scenario.positionPlayer;
 
+
             // On charge les arbres
-            for (int i= 0; i< _scenario.position.Count; i++)
-            {
-                //Debug.Log("Chargement des arbres. i= " + i + " _scenario.position.Count= " + _scenario.position.Count +
-                //    "  _scenario.rotation.Count= " + _scenario.rotation.Count);
-                _scenario.chargementObjet(_arbre, _scenario.position[i], _scenario.rotation[i]);
-            }
+            _scenario.retabliForet(_arbre);
+
+            //for (int i= 0; i< _scenario.position.Count; i++)
+            //{
+            //    //Debug.Log("Chargement des arbres. i= " + i + " _scenario.position.Count= " + _scenario.position.Count +
+            //    //    "  _scenario.rotation.Count= " + _scenario.rotation.Count);
+            //    _scenario.chargementObjet(_arbre, _scenario.position[i], _scenario.rotation[i]);
+            //}
 
             // On lance les proies
-            for (int i = 0; i < _scenario.position.Count; i++)
-            {
-                //Debug.Log("Chargement des arbres. i= " + i + " _scenario.position.Count= " + _scenario.position.Count +
-                //    "  _scenario.rotation.Count= " + _scenario.rotation.Count);
-                _scenario.chargementObjet(_proie, _scenario.position[i], _scenario.rotation[i]);
-            }
+            //for (int i = 0; i < _scenario.position.Count; i++)
+            //{
+            //    //Debug.Log("Chargement des arbres. i= " + i + " _scenario.position.Count= " + _scenario.position.Count +
+            //    //    "  _scenario.rotation.Count= " + _scenario.rotation.Count);
+            //    //_scenario.chargementObjet(_proie, _scenario.position[i], _scenario.rotation[i]);
+            //    _scenario.chargementObjet(_proie, new Vector3(Random.Range(-10f,10f), Random.Range(1f, 5f), 
+            //        Random.Range(-10f, 10f)), Quaternion.identity);
+            //}
 
         }
 
@@ -125,11 +135,17 @@ public class Player : MonoBehaviour
         if (other.gameObject.CompareTag("Target_Trigger"))
         {
 
-            _scenario.position.Add(other.transform.position);
-            _scenario.rotation.Add(other.transform.rotation);
+            ///_scenario.position.Add(other.transform.position);
+            ///_scenario.rotation.Add(other.transform.rotation);
             // Debug.Log("Target_Trigger touché position = " + other.transform.position);
+
+            _scenario.chargementObjet(_arbre, other.transform.position, other.transform.rotation);
+
             Destroy(other.gameObject);
-            Instantiate(_arbre, other.transform.position, other.transform.rotation);
+            ///Instantiate(_arbre, other.transform.position, other.transform.rotation);
+
+
+
             updateScore();
         }
     }
@@ -139,28 +155,19 @@ public class Player : MonoBehaviour
         // Debug.Log("On collision enter tag: " + collision.gameObject.tag);
         if (collision.gameObject.CompareTag("Target") || collision.gameObject.CompareTag("Proie"))
         {
-            _scenario.position.Add(collision.transform.position);
-            _scenario.rotation.Add(collision.transform.rotation);
+            ///_scenario.position.Add(collision.transform.position);
+            ///_scenario.rotation.Add(collision.transform.rotation);
             // Debug.Log("Target touché position = " + collision.transform.position);
+            ///Instantiate(_arbre, collision.transform.position, collision.transform.rotation);
+
+            _scenario.chargementObjet(_arbre, collision.transform.position, collision.transform.rotation);
+
             Destroy(collision.gameObject);
-            Instantiate(_arbre, collision.transform.position, collision.transform.rotation);
             //_scenario.indiceArbre++;
 
             //_scenario.affichePositionRotation();
             updateScore();
         }
-        //else if (collision.gameObject.CompareTag("Proie"))
-        //{
-        //    _scenario.position.Add(collision.transform.position);
-        //    _scenario.rotation.Add(collision.transform.rotation);
-        //    //Debug.Log("Proie touché position = " + collision.transform.position);
-        //    Destroy(collision.gameObject);
-        //    Instantiate(_arbre, collision.transform.position, collision.transform.rotation);
-        //    //_scenario.indiceArbre++;
-
-        //    //_scenario.affichePositionRotation();
-        //    updateScore();
-        //}
 
     }
     private void updateScore()
@@ -174,8 +181,8 @@ public class Player : MonoBehaviour
         {
             _scenario.positionPlayer = transform.position;
             SceneManager.LoadScene("Level_2");
-            //Debug.Log("Chargement de la scene 2.  SceneManager.GetActiveScene()" + SceneManager.GetActiveScene().name + " " +
-            //    SceneManager.GetActiveScene().buildIndex);
+            Debug.Log("Chargement de la scene 2.  SceneManager.GetActiveScene()" + SceneManager.GetActiveScene().name + " " +
+                SceneManager.GetActiveScene().buildIndex);
         }
     }
 

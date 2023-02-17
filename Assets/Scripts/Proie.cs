@@ -9,7 +9,7 @@ public class Proie : MonoBehaviour
     [SerializeField]float Xmin = -10f, Xmax = 10f, Ymin = 0f, Ymax = 1f, Zmin = -10f, Zmax = 10f;
     GameObject _cetObjet;
 
-    [SerializeField] float tictac = 20f;
+    [SerializeField] float tictac = 3f;
     //[SerializeField] int conso = 1;
 
     [SerializeField] private ScriptableObjectTest _soProie;
@@ -46,10 +46,10 @@ public class Proie : MonoBehaviour
 
     private IEnumerator OhVieillir()
     {
-        Debug.Log("Vieillir lancer : attente ");
+        //Debug.Log("Vieillir lancer : attente ");
         yield return new WaitForSeconds(tictac);
 
-        Debug.Log("Vieillir tictac atteint : " + tictac);
+        //Debug.Log("Vieillir tictac atteint : " + tictac);
 
         joyeuAnniversaire = true;
 
@@ -81,7 +81,10 @@ public class Proie : MonoBehaviour
             if(croissance.x > _soProie.tailleMaxiProie)
             {
                 transform.localScale = new Vector3(1, 1, 1);
-                Instantiate(gameObject,transform.position, transform.rotation);
+                _soProie.chargementObjet(gameObject, transform.position, transform.rotation);
+                //Instantiate(gameObject,transform.position, transform.rotation);
+                //_soProie.position.Add(transform.position);
+                //_soProie.rotation.Add(transform.rotation);
 
             }
             else

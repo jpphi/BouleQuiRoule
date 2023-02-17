@@ -48,8 +48,11 @@ public class Arbre : MonoBehaviour
         if( (scale.x < _soArbre.tailleMiniXArbre) || (scale.y < _soArbre.tailleMiniYArbre) || (scale.z < _soArbre.tailleMiniZArbre))
         {
             //Debug.Log("Arbre à détruire = " + transform.position);
-            _soArbre.position.Remove(transform.position);
-            _soArbre.rotation.Remove(transform.rotation);
+
+            ///_soArbre.position.Remove(transform.position);
+            ///_soArbre.rotation.Remove(transform.rotation);
+
+
             //Debug.Log("Longueur list position = " + _soArbre.position.Count);
 
             Destroy(gameObject);
