@@ -10,11 +10,15 @@ public class Arbre : MonoBehaviour
 
     bool joyeuAnniversaire = false;
 
+    int id = 0;
+
 
     void Start()
     {
         // On va gérer le vieillissement des arbres avec cette variable
         StartCoroutine(OnPousse());
+
+        Debug.Log("L'arbre numero ");
 
 
     }
@@ -55,7 +59,8 @@ public class Arbre : MonoBehaviour
 
             //Debug.Log("Longueur list position = " + _soArbre.position.Count);
 
-            Destroy(gameObject);
+            //Destroy(gameObject);
+            _soArbre.coupeArbre(gameObject);
         }
     }
 

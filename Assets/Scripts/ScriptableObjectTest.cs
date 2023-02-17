@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.PlayerSettings;
 
 
 //[System.Serializable]
@@ -10,16 +11,13 @@ using UnityEngine;
 //    public Quaternion rotation;
 //}
 
-[CreateAssetMenu(menuName = "Scenario 1")]
-
-
 [System.Serializable]
 public class CaracteristiqueProie
 {
-    public List<Vector3> position;
-    public List<Vector3> scale;
-    public List<Quaternion> rotation;
-    public List<int> numeroProie;
+    public Vector3 position;
+    public Vector3 scale;
+    public Quaternion rotation;
+    public int numeroProie;
 
 }
 
@@ -33,12 +31,15 @@ public class CaracteristiqueArbre
 
 }
 
+
+[CreateAssetMenu(menuName = "Scenario 1")]
+
 public class ScriptableObjectTest : ScriptableObject
 {
     //float test;
     //    public Coordonnees[] _coord;
 
-    public List<CaracteristiqueProie> caracteristiqueProies;// = new List<CaracteristiqueProie>();
+    public List<CaracteristiqueProie> caracteristiqueProie;// = new List<CaracteristiqueProie>();
     public List<CaracteristiqueArbre> caracteristiqueArbre; //= new List<CaracteristiqueArbre>();
 
     public Vector3 positionPlayer;
@@ -56,6 +57,7 @@ public class ScriptableObjectTest : ScriptableObject
     public float tailleMiniYProie = 0.2f;
     public float tailleMiniZProie = 0.2f;
     public float tailleMaxiProie = 2f;
+    public int maxProie = 200;
 
     public float decroissanceProie = 0.9f;
     public float croissanceProie =1.15f;
@@ -64,7 +66,8 @@ public class ScriptableObjectTest : ScriptableObject
     public int stockNouritureAuDepartProie = 10;
     public int stockNouritureAuDepartPredateur = 100;
 
-    public int maxArbre= 100;
+    public int maxArbre = 100;
+    private int indexArbre = 0;
 
 
     //public void affichePositionRotation()
@@ -81,14 +84,19 @@ public class ScriptableObjectTest : ScriptableObject
         Instantiate(obj, pos, rot);
         if (obj.CompareTag("Proie"))
         {
-            //numeroProie.Add(numeroProix.Count);
+            caracteristiqueProie.Add(new CaracteristiqueProie {
+                position = pos,
+                rotation = rot,
+            });
         }
         if (obj.CompareTag("Arbre"))
         {
-            //numeroProie.Add(numeroProix.Count);
+            //Debug.Log("On créer un arbre à la position pos= " + pos);
             caracteristiqueArbre.Add(new CaracteristiqueArbre { 
             position= pos,
-            rotation= rot});
+            rotation= rot,
+            numero= indexArbre++
+            });
 
         }
 
@@ -111,15 +119,43 @@ public class ScriptableObjectTest : ScriptableObject
 
     public void retabliForet(GameObject arbre)
     {
-        int nbarbre = 0;
+        //int nbarbre = 0;
 
-        for(int i= 0; (i< caracteristiqueArbre.Count) && (i < maxArbre); i++, nbarbre++)
+        //Debug.Log("On rentre dans retabliForet caracteristiqueArbre.Count= " + caracteristiqueArbre.Count);
+
+        for (int i= 0; (i< caracteristiqueArbre.Count) && (i < maxArbre); i++)
         {
-            chargementObjet(arbre, caracteristiqueArbre[i].position, caracteristiqueArbre[i].rotation);
+            //chargementObjet(arbre, caracteristiqueArbre[i].position, caracteristiqueArbre[i].rotation);
+            Instantiate(arbre, caracteristiqueArbre[i].position, caracteristiqueArbre[i].rotation);
 
         }
 
-        Debug.Log("retabliForest : arbre= " + nbarbre + " caracteristiqueArbre.Count= " + caracteristiqueArbre.Count);
+        //Debug.Log("retabliForest : arbre= " + nbarbre + " caracteristiqueArbre.Count= " + caracteristiqueArbre.Count);
+    }
+
+    public void coupeArbre(GameObject arbre)
+    {
+        Debug.Log("Couper un arbre à la position " + arbre.transform.position);
+
+        for(int i= 0; i< caracteristiqueArbre.Count; i++)
+        {
+            if (caracteristiqueArbre[i].position == arbre.transform.position)
+            {
+                Debug.Log("arbre coupé !");
+                caracteristiqueArbre.RemoveAt(i);
+                break;
+            }
+        }
+
+    }
+
+    public void lancerLesProies(GameObject proie)
+    {
+        for (int i = 0; (i < caracteristiqueProie.Count) && (i < maxProie); i++)
+        {
+            Instantiate(proie, caracteristiqueProie[i].position, caracteristiqueProie[i].rotation);
+        }
+
     }
 
 

@@ -23,7 +23,6 @@ public class Player : MonoBehaviour
 
     public PlayerPrefs _score;
 
-
     //private int indice = 0;
 
     //private bool tour1 = true;
@@ -62,13 +61,14 @@ public class Player : MonoBehaviour
             // On s'assure que les listes sont vides
             //_scenario.position.Clear();
             //_scenario.rotation.Clear();
-            
-            _scenario.caracteristiqueProies.Clear();
 
+            _scenario.caracteristiqueArbre.Clear();
+            _scenario.caracteristiqueProie.Clear();
+            //Debug.Log("Level 1, aprés clear de caracteristique arbre caracteristiqueArbre.Count= " + _scenario.caracteristiqueArbre.Count);
 
             //_scenario.scale.Clear();
-            //_scoreText.text = PlayerPrefs.GetString("_score", "Score: " + ScoreValue);
-            _scoreText.text = PlayerPrefs.GetString("Score : " + ScoreValue);
+            PlayerPrefs.SetString("_score", "Score: " + ScoreValue);
+            //_scoreText.text = PlayerPrefs.GetString("Score : " + ScoreValue);
             //Debug.Log("_scoreText.text= " + _scoreText.text);
         }
 
@@ -81,14 +81,17 @@ public class Player : MonoBehaviour
             // On charge les arbres
             _scenario.retabliForet(_arbre);
 
-            //for (int i= 0; i< _scenario.position.Count; i++)
-            //{
-            //    //Debug.Log("Chargement des arbres. i= " + i + " _scenario.position.Count= " + _scenario.position.Count +
-            //    //    "  _scenario.rotation.Count= " + _scenario.rotation.Count);
-            //    _scenario.chargementObjet(_arbre, _scenario.position[i], _scenario.rotation[i]);
-            //}
+            // On crée et on lance les proies
+            for(int i= 0; i < 8; i++)
+            {
+                _scenario.chargementObjet(_proie, new Vector3(Random.Range(-10f, 10f), Random.Range(1f, 5f), Random.Range(-10f, 10f)), 
+                    Quaternion.identity);
 
-            // On lance les proies
+            }
+            _scenario.lancerLesProies(_proie);
+
+            // Les proix créer doivent avoir un numero d'identification
+
             //for (int i = 0; i < _scenario.position.Count; i++)
             //{
             //    //Debug.Log("Chargement des arbres. i= " + i + " _scenario.position.Count= " + _scenario.position.Count +
@@ -137,14 +140,13 @@ public class Player : MonoBehaviour
 
             ///_scenario.position.Add(other.transform.position);
             ///_scenario.rotation.Add(other.transform.rotation);
-            // Debug.Log("Target_Trigger touché position = " + other.transform.position);
+            ///Instantiate(_arbre, other.transform.position, other.transform.rotation);
+
+            //Debug.Log("Target_Trigger touché position = " + other.transform.position);
 
             _scenario.chargementObjet(_arbre, other.transform.position, other.transform.rotation);
 
             Destroy(other.gameObject);
-            ///Instantiate(_arbre, other.transform.position, other.transform.rotation);
-
-
 
             updateScore();
         }
@@ -157,8 +159,9 @@ public class Player : MonoBehaviour
         {
             ///_scenario.position.Add(collision.transform.position);
             ///_scenario.rotation.Add(collision.transform.rotation);
-            // Debug.Log("Target touché position = " + collision.transform.position);
             ///Instantiate(_arbre, collision.transform.position, collision.transform.rotation);
+
+            //Debug.Log("Target touché position = " + collision.transform.position);
 
             _scenario.chargementObjet(_arbre, collision.transform.position, collision.transform.rotation);
 
@@ -181,8 +184,8 @@ public class Player : MonoBehaviour
         {
             _scenario.positionPlayer = transform.position;
             SceneManager.LoadScene("Level_2");
-            Debug.Log("Chargement de la scene 2.  SceneManager.GetActiveScene()" + SceneManager.GetActiveScene().name + " " +
-                SceneManager.GetActiveScene().buildIndex);
+            //Debug.Log("Chargement de la scene 2.  SceneManager.GetActiveScene()" + SceneManager.GetActiveScene().name + " " +
+            //    SceneManager.GetActiveScene().buildIndex);
         }
     }
 
@@ -192,5 +195,10 @@ public class Player : MonoBehaviour
 
         // _scrollbar.GetComponent<Scrollbar>().value
         _speed= _slider.GetComponent<Slider>().value;  
+    }
+
+    private void OnApplicationQuit()
+    {
+        // Détruire la clé PlayerPref
     }
 }
