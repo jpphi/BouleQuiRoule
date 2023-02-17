@@ -61,8 +61,9 @@ public class Player : MonoBehaviour
             // On s'assure que les listes sont vides
             _scenario.position.Clear();
             _scenario.rotation.Clear();
-            _scenario.scale.Clear();
-            _scoreText.text = PlayerPrefs.GetString("_score", "Score: " + ScoreValue);
+            //_scenario.scale.Clear();
+            //_scoreText.text = PlayerPrefs.GetString("_score", "Score: " + ScoreValue);
+            _scoreText.text = PlayerPrefs.GetString("Score : " + ScoreValue);
             //Debug.Log("_scoreText.text= " + _scoreText.text);
         }
 
@@ -97,9 +98,13 @@ public class Player : MonoBehaviour
         //{
         //    _rigidbody.AddForce(Input.GetAxis("Horizontal") * _speed * Time.fixedDeltaTime, 0f, Input.GetAxis("Vertical") * _speed * Time.fixedDeltaTime);
         //}
-        _rigidbody.AddForce(mouvx * _speed * Time.fixedDeltaTime, 0f, mouvy * _speed * Time.fixedDeltaTime);
 
-        if(transform.position.y <= -2)
+        if (mouvx != 0f || mouvy != 0f)
+        {
+            _rigidbody.AddForce(mouvx * _speed * Time.fixedDeltaTime, 0f, mouvy * _speed * Time.fixedDeltaTime);
+        }
+
+        if (transform.position.y <= -2)
         {
             transform.position= new Vector3(0,5,0);
         }
@@ -132,7 +137,7 @@ public class Player : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         // Debug.Log("On collision enter tag: " + collision.gameObject.tag);
-        if (collision.gameObject.CompareTag("Target"))
+        if (collision.gameObject.CompareTag("Target") || collision.gameObject.CompareTag("Proie"))
         {
             _scenario.position.Add(collision.transform.position);
             _scenario.rotation.Add(collision.transform.rotation);
@@ -144,18 +149,18 @@ public class Player : MonoBehaviour
             //_scenario.affichePositionRotation();
             updateScore();
         }
-        else if (collision.gameObject.CompareTag("Proie"))
-        {
-            _scenario.position.Add(collision.transform.position);
-            _scenario.rotation.Add(collision.transform.rotation);
-            //Debug.Log("Proie touché position = " + collision.transform.position);
-            Destroy(collision.gameObject);
-            Instantiate(_arbre, collision.transform.position, collision.transform.rotation);
-            //_scenario.indiceArbre++;
+        //else if (collision.gameObject.CompareTag("Proie"))
+        //{
+        //    _scenario.position.Add(collision.transform.position);
+        //    _scenario.rotation.Add(collision.transform.rotation);
+        //    //Debug.Log("Proie touché position = " + collision.transform.position);
+        //    Destroy(collision.gameObject);
+        //    Instantiate(_arbre, collision.transform.position, collision.transform.rotation);
+        //    //_scenario.indiceArbre++;
 
-            //_scenario.affichePositionRotation();
-            updateScore();
-        }
+        //    //_scenario.affichePositionRotation();
+        //    updateScore();
+        //}
 
     }
     private void updateScore()

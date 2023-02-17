@@ -46,7 +46,10 @@ public class Proie : MonoBehaviour
 
     private IEnumerator OhVieillir()
     {
+        Debug.Log("Vieillir lancer : attente ");
         yield return new WaitForSeconds(tictac);
+
+        Debug.Log("Vieillir tictac atteint : " + tictac);
 
         joyeuAnniversaire = true;
 

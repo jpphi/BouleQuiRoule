@@ -16,7 +16,7 @@ public class ScriptableObjectTest : ScriptableObject
     float test;
     //    public Coordonnees[] _coord;
     public List<Vector3> position;
-    public List<Vector3> scale;
+    //public List<Vector3> scale;
     public List<Quaternion> rotation;
     public Vector3 positionPlayer;
 

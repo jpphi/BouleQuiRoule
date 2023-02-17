@@ -165,5 +165,5 @@ MonoBehaviour:
   Ymax: 1
   Zmin: -10
   Zmax: 10
-  tictac: 1
+  tictac: 3
   _soProie: {fileID: 11400000, guid: 3370110c96a29dc408e13a3f0bf46fa8, type: 2}
