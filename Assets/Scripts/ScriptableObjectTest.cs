@@ -1,7 +1,10 @@
-using System.Collections;
+//using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEditor.PlayerSettings;
+using UnityEngine.UIElements;
+//using static UnityEditor.PlayerSettings;
 
 
 //[System.Serializable]
@@ -36,16 +39,15 @@ public class CaracteristiqueArbre
 
 public class ScriptableObjectTest : ScriptableObject
 {
-    //float test;
-    //    public Coordonnees[] _coord;
+    //public int taille = 8;
 
-    public List<CaracteristiqueProie> caracteristiqueProie;// = new List<CaracteristiqueProie>();
+    // Arbres
     public List<CaracteristiqueArbre> caracteristiqueArbre; //= new List<CaracteristiqueArbre>();
+    public int maxArbre = 100;
+    public float tempsDePousse = 4f;
+    public int NbArbre;
 
-    public Vector3 positionPlayer;
-
-    public int taille = 8;
-
+    //public int stockNouritureAuDepartArbre = 100;
     public float tailleMiniXArbre = 0.2f;
     public float tailleMiniYArbre = 0.2f;
     public float tailleMiniZArbre = 0.2f;
@@ -53,24 +55,67 @@ public class ScriptableObjectTest : ScriptableObject
 
     public float croissanceArbre = 1.05f;
 
+    // Proies
+    public List<CaracteristiqueProie> caracteristiqueProie;// = new List<CaracteristiqueProie>();
+    public int NbProie;
+    public float decroissanceProie = 0.9f;
+    public float croissanceProie = 1.15f;
+    public int stockNouritureAuDepartProie = 10;
+
     public float tailleMiniXProie = 0.2f;
     public float tailleMiniYProie = 0.2f;
     public float tailleMiniZProie = 0.2f;
     public float tailleMaxiProie = 2f;
+
     public int maxProie = 200;
-    public int nombreDeProie = 0;
+    //public int nombreDeProie = 0;
+    //public int IndiceProix = 0;
 
-    public float decroissanceProie = 0.9f;
-    public float croissanceProie =1.15f;
-
-    public int stockNouritureAuDepartArbre = 100;
-    public int stockNouritureAuDepartProie = 10;
+    // Prédateur et Player
     public int stockNouritureAuDepartPredateur = 100;
+    public Vector3 positionPlayer;
 
-    public int maxArbre = 100;
-    private int indexArbre = 0;
+    public void creerObjet(GameObject obj, Vector3 pos, Quaternion rot, Vector3 scale)
+    {
+        GameObject objcree;
+
+        Debug.Log("Créée l'objet " + obj.name + " position " + obj.transform.position + " scale " + obj.transform.localScale);
 
 
+        if (obj.CompareTag("Arbre") && (NbArbre < maxArbre))
+        {
+            NbArbre++;
+
+            objcree = Instantiate(obj, pos, rot);
+            objcree.transform.localScale = scale;
+        }
+        else if (obj.CompareTag("Proie") && (NbProie < maxProie))
+        {
+            NbProie++;
+
+            objcree = Instantiate(obj, pos, rot);
+            objcree.transform.localScale = scale;
+        }
+ 
+    }
+    public void detruitObjet(GameObject obj)
+    {
+        Debug.Log("Détruit Objet " + obj.name + " position " + obj.transform.position + " scale " + obj.transform.localScale);
+
+        if (obj.CompareTag("Arbre"))
+        {
+            NbArbre--;
+        }
+        else if (obj.CompareTag("Proie") && (NbProie < maxProie))
+        {
+            NbProie--;
+        }
+
+        Destroy(obj);
+
+    }
+
+    //[SerializeField] Proie _soproie;
     //public void affichePositionRotation()
     //{
     //    for(int i= 0; i < position.Count; i++)
@@ -79,92 +124,67 @@ public class ScriptableObjectTest : ScriptableObject
     //    }
     //}
 
-    public void chargementObjet(GameObject obj, Vector3 pos, Quaternion rot)
-    {
-        //Debug.Log("Objet chargé en  " + pos + " rotation " + rot);
-        Instantiate(obj, pos, rot);
-        if (obj.CompareTag("Proie"))
-        {
-            caracteristiqueProie.Add(new CaracteristiqueProie {
-                position = pos,
-                rotation = rot,
-            });
-
-            nombreDeProie++;
-        }
-        if (obj.CompareTag("Arbre"))
-        {
-            //Debug.Log("On créer un arbre à la position pos= " + pos);
-            caracteristiqueArbre.Add(new CaracteristiqueArbre { 
-            position= pos,
-            rotation= rot,
-            numero= indexArbre++
-            });
-
-        }
-
-    }
-    public void detruitObjet(GameObject obj, int numero)
-    {
-        //Debug.Log("Objet chargé en  " + pos + " rotation " + rot);
+    //public void detruitObjet(GameObject obj, int numero)
+    //{
+    //    //Debug.Log("Objet chargé en  " + pos + " rotation " + rot);
 
 
 
-        if (obj.CompareTag("Proie"))
-        {
-            //numeroProie.Remove(numero);
-        }
+    //    if (obj.CompareTag("Proie"))
+    //    {
+    //        //numeroProie.Remove(numero);
+    //    }
 
-        Destroy(obj);
+    //    Destroy(obj);
 
 
-    }
+    //}
 
-    public void retabliForet(GameObject arbre)
-    {
-        //int nbarbre = 0;
+    //public void retabliForet(GameObject arbre)
+    //{
+    //    //int nbarbre = 0;
 
-        //Debug.Log("On rentre dans retabliForet caracteristiqueArbre.Count= " + caracteristiqueArbre.Count);
+    //    //Debug.Log("On rentre dans retabliForet caracteristiqueArbre.Count= " + caracteristiqueArbre.Count);
 
-        for (int i= 0; (i< caracteristiqueArbre.Count) && (i < maxArbre); i++)
-        {
-            //chargementObjet(arbre, caracteristiqueArbre[i].position, caracteristiqueArbre[i].rotation);
-            Instantiate(arbre, caracteristiqueArbre[i].position, caracteristiqueArbre[i].rotation);
+    //    for (int i= 0; (i< caracteristiqueArbre.Count) && (i < maxArbre); i++)
+    //    {
+    //        //chargementObjet(arbre, caracteristiqueArbre[i].position, caracteristiqueArbre[i].rotation);
+    //        Instantiate(arbre, caracteristiqueArbre[i].position, caracteristiqueArbre[i].rotation);
 
-        }
+    //    }
 
-        //Debug.Log("retabliForest : arbre= " + nbarbre + " caracteristiqueArbre.Count= " + caracteristiqueArbre.Count);
-    }
+    //    //Debug.Log("retabliForest : arbre= " + nbarbre + " caracteristiqueArbre.Count= " + caracteristiqueArbre.Count);
+    ////}
 
-    public void coupeArbre(GameObject arbre)
-    {
-        Debug.Log("Couper un arbre à la position " + arbre.transform.position);
+    //public void coupeArbre(GameObject arbre)
+    //{
+    //    Debug.Log("Couper un arbre à la position " + arbre.transform.position);
 
-        for(int i= 0; i< caracteristiqueArbre.Count; i++)
-        {
-            if (caracteristiqueArbre[i].position == arbre.transform.position)
-            {
-                Debug.Log("arbre coupé !");
-                caracteristiqueArbre.RemoveAt(i);
-                break;
-            }
-        }
-    }
+    //    for(int i= 0; i< caracteristiqueArbre.Count; i++)
+    //    {
+    //        if (caracteristiqueArbre[i].position == arbre.transform.position)
+    //        {
+    //            Debug.Log("arbre coupé !");
+    //            caracteristiqueArbre.RemoveAt(i);
+    //            break;
+    //        }
+    //    }
+    //}
 
-    public void uneProieMeurt()
-    {
-        nombreDeProie--;
-    }
+    //public void uneProieMeurt()
+    //{
+    //    nombreDeProie--;
+    //}
 
-    public void lancerLesProies(GameObject proie)
-    {
-        //  caracteristiqueProie.Count
-        for (int i = 0; (i < nombreDeProie) && (i < maxProie); i++)
-        {
-            Instantiate(proie, caracteristiqueProie[i].position, caracteristiqueProie[i].rotation);
-        }
+    //public void lancerLesProies(GameObject proie)
+    //{
+    //    //  caracteristiqueProie.Count
+    //    for (int i = 0; (i < nombreDeProie) && (i < maxProie); i++)
+    //    {
+    //        Instantiate(proie, caracteristiqueProie[i].position, caracteristiqueProie[i].rotation);
+    //    }
 
-    }
+    //}
 
 
 }

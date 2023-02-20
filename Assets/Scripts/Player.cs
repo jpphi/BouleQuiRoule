@@ -5,6 +5,8 @@
 //using static UnityEditor.PlayerSettings;
 //using static UnityEditor.PlayerSettings;
 //using UnityEngine.UIElements;
+//using static UnityEditor.PlayerSettings;
+//using UnityEngine.UIElements;
 
 using UnityEngine;
 using TMPro;
@@ -16,6 +18,8 @@ public class Player : MonoBehaviour
 {
     private Rigidbody _rigidbody;
     private int ScoreValue = 0;
+    private int ScorePrec = 0;
+
     [SerializeField] private TMP_Text _scoreText;
     [SerializeField] private float _speed= 100f;
     [SerializeField] private GameObject _arbre, _player, _proie;
@@ -31,6 +35,25 @@ public class Player : MonoBehaviour
     private float mouvx, mouvy;
     public float _sliderValue;
 
+    private GameObject[] listeproie, listearbre;
+
+    private void Awake()
+    {
+        instance= this;
+        ScoreValue = PlayerPrefs.GetInt("_score", 0);
+
+        ScorePrec= ScoreValue;
+        Debug.Log("updateScore scoreValue= " + ScoreValue);
+        PlayerPrefs.SetInt("_score", ScoreValue);
+
+        _scoreText.text = ("Score : " + ScoreValue).ToString();
+
+        //_scoreText.text.ForceMeshUpdate(true);
+
+        Debug.Log("Dans awake du level1: _scoreText.text= " + _scoreText.text);
+
+    }
+
     void Start()
     {
         _rigidbody = GetComponent<Rigidbody>();
@@ -44,32 +67,50 @@ public class Player : MonoBehaviour
         if (_scene.buildIndex == 0)
         {
             // On s'assure que les listes sont vides
-            _scenario.caracteristiqueArbre.Clear();
-            _scenario.caracteristiqueProie.Clear();
+            //_scenario.caracteristiqueArbre.Clear();
+            //_scenario.caracteristiqueProie.Clear();
             //Debug.Log("Level 1, aprés clear de caracteristique arbre caracteristiqueArbre.Count= " + _scenario.caracteristiqueArbre.Count);
+            _scenario.NbArbre = _scenario.NbProie = 0;
 
-            //PlayerPrefs.SetString("_score", "Score: " + ScoreValue);
-            _scoreText.text = PlayerPrefs.GetString("Score : " + ScoreValue);
-            //Debug.Log("_scoreText.text= " + _scoreText.text);
         }
-
 
         if (_scene.buildIndex== 1)
         {
             transform.position = _scenario.positionPlayer;
+            _scenario.NbArbre = _scenario.NbProie = 0;
 
             // On charge les arbres
-            _scenario.retabliForet(_arbre);
+            retabliForet(_arbre);
 
             // On crée et on lance les proies
             for(int i= 0; i < 8; i++)
             {
-                _scenario.chargementObjet(_proie, new Vector3(Random.Range(-10f, 10f), Random.Range(1f, 5f), Random.Range(-10f, 10f)), 
-                    Quaternion.identity);
+                //_scenario.chargementObjet(_proie, new Vector3(Random.Range(-10f, 10f), Random.Range(1f, 5f), Random.Range(-10f, 10f)), 
+                //    Quaternion.identity);
+
+                _scenario.creerObjet(_proie, new Vector3(Random.Range(-10f, 10f), Random.Range(1f, 5f), Random.Range(-10f, 10f)),
+                    Quaternion.identity, new Vector3(1,1,1) );
+
+                _scenario.NbProie++;
 
             }
-            _scenario.lancerLesProies(_proie);
+            //_scenario.lancerLesProies(_proie);
         }
+
+        if (_scene.buildIndex == 2)
+        {
+            _scenario.NbArbre = _scenario.NbProie = 0;
+
+            Debug.Log("Level 3");
+            //listeproie = GameObject.FindGameObjectsWithTag("Proie");
+
+            // On charge les arbres
+            retabliForet(_arbre);
+
+            lanceProies(_proie);
+        }
+
+
 
     }
 
@@ -89,6 +130,7 @@ public class Player : MonoBehaviour
         {
             transform.position= new Vector3(0,5,0);
         }
+
     }
 
     public void OnMove(InputValue _input)
@@ -105,9 +147,10 @@ public class Player : MonoBehaviour
         {
             //Debug.Log("Target_Trigger touché position = " + other.transform.position);
 
-            _scenario.chargementObjet(_arbre, other.transform.position, other.transform.rotation);
+            _scenario.creerObjet(_arbre, other.transform.position, other.transform.rotation, new Vector3(1,1,1));
+            _scenario.NbArbre++;
 
-            Destroy(other.gameObject);
+            _scenario.detruitObjet(other.gameObject);
 
             updateScore();
         }
@@ -120,9 +163,10 @@ public class Player : MonoBehaviour
         {
             //Debug.Log("Target touché position = " + collision.transform.position);
 
-            _scenario.chargementObjet(_arbre, collision.transform.position, collision.transform.rotation);
+            _scenario.creerObjet(_arbre, collision.transform.position, collision.transform.rotation, new Vector3(1, 1, 1));
+            _scenario.NbArbre++;
 
-            Destroy(collision.gameObject);
+            _scenario.detruitObjet(collision.gameObject);
 
             updateScore();
         }
@@ -130,15 +174,56 @@ public class Player : MonoBehaviour
     }
     private void updateScore()
     {
+        ScoreValue= PlayerPrefs.GetInt("_score");
         ScoreValue++;
-        PlayerPrefs.SetString("_score", "Score: " + ScoreValue);
-        _scoreText.text = PlayerPrefs.GetString("_score");
+        Debug.Log("updateScore scoreValue= " + ScoreValue);
+        PlayerPrefs.SetInt("_score", ScoreValue);
+
+        _scoreText.text = "Score : " + ScoreValue.ToString();
+        Debug.Log("_scoreText.text= " + _scoreText.text);
 
         //Debug.Log("updateScore après ++ " + ScoreValue);
-        if(ScoreValue== 8)
+        if (ScoreValue == 8)
+        {
+            _scenario.caracteristiqueArbre.Clear();
+            _scenario.positionPlayer = transform.position;
+
+            listearbre = GameObject.FindGameObjectsWithTag("Arbre");
+
+            foreach (GameObject el in listearbre)
+            {
+                //Debug.Log("objet: " + el.tag + " Nom de l'objet " + el.name);
+                EnregistrementObjet(el, el.transform.position, el.transform.rotation, el.transform.localScale);
+            }
+
+            SceneManager.LoadScene("Level_2");
+            //Debug.Log("Chargement de la scene 2.  SceneManager.GetActiveScene()" + SceneManager.GetActiveScene().name + " " +
+            //    SceneManager.GetActiveScene().buildIndex);
+        }
+
+        else if (ScoreValue == 16)
         {
             _scenario.positionPlayer = transform.position;
-            SceneManager.LoadScene("Level_2");
+            _scenario.caracteristiqueArbre.Clear();
+            _scenario.caracteristiqueProie.Clear();
+
+            listeproie = GameObject.FindGameObjectsWithTag("Proie");
+            listearbre = GameObject.FindGameObjectsWithTag("Arbre");
+
+            foreach (GameObject p in listeproie)
+            {
+                //Debug.Log("objet: " + el.tag + " Nom de l'objet " + el.name);
+                EnregistrementObjet(p, p.transform.position, p.transform.rotation, p.transform.localScale);
+            }
+
+
+            foreach (GameObject el in listearbre)
+            {
+                //Debug.Log("objet: " + el.tag + " Nom de l'objet " + el.name);
+                EnregistrementObjet(el, el.transform.position, el.transform.rotation, el.transform.localScale);
+            }
+
+            SceneManager.LoadScene("Level_3");
             //Debug.Log("Chargement de la scene 2.  SceneManager.GetActiveScene()" + SceneManager.GetActiveScene().name + " " +
             //    SceneManager.GetActiveScene().buildIndex);
         }
@@ -156,5 +241,71 @@ public class Player : MonoBehaviour
     {
         // Détruire la clé PlayerPref
         PlayerPrefs.DeleteKey("_score");
+        Debug.Log("La clé doit être détruite ");
+        _scoreText.text = "";
     }
+
+    public void EnregistrementObjet(GameObject obj, Vector3 pos, Quaternion rot, Vector3 scale)
+    {
+        //Debug.Log("Tag objet= " + obj.tag + " doit être chargé en  " + pos + " rotation " + rot);
+        if (obj.CompareTag("Proie"))
+        {
+            _scenario.caracteristiqueProie.Add(new CaracteristiqueProie
+            {
+                position = pos,
+                rotation = rot,
+                scale = scale,
+                //numeroProie= _soproie.IndiceProix,
+            });
+
+        }
+        if (obj.CompareTag("Arbre"))
+        {
+            //Debug.Log("On créer un arbre à la position pos= " + pos);
+            _scenario.caracteristiqueArbre.Add(new CaracteristiqueArbre
+            {
+                position = pos,
+                rotation = rot,
+                scale = scale,
+                //numero= indexArbre++
+            });
+
+        }
+
+
+    }
+
+    public void retabliForet(GameObject arbre)
+    {
+        //int nbarbre = 0;
+
+        Debug.Log("On rentre dans retabliForet caracteristiqueArbre.Count= " + _scenario.caracteristiqueArbre.Count);
+
+        for (int i = 0, NbArbre= 0; (i < _scenario.caracteristiqueArbre.Count) && (i < _scenario.maxArbre); i++, NbArbre++)
+        {
+            _scenario.creerObjet(arbre, _scenario.caracteristiqueArbre[i].position, _scenario.caracteristiqueArbre[i].rotation, 
+                _scenario.caracteristiqueArbre[i].scale);
+        }
+
+        //Debug.Log("retabliForest : arbre= " + nbarbre + " caracteristiqueArbre.Count= " + caracteristiqueArbre.Count);
+    }
+    public void lanceProies(GameObject proie)
+    {
+        //int nbarbre = 0;
+
+        Debug.Log("On lance les proies caracteristiqueProie.Count= " + _scenario.caracteristiqueProie.Count);
+
+        for (int i = 0, NbProie= 0; (i < _scenario.caracteristiqueProie.Count) && (i < _scenario.maxProie); i++, NbProie++)
+        {
+            //chargementObjet(arbre, caracteristiqueArbre[i].position, caracteristiqueArbre[i].rotation);
+            _scenario.creerObjet(proie, _scenario.caracteristiqueProie[i].position, _scenario.caracteristiqueProie[i].rotation,
+                _scenario.caracteristiqueProie[i].scale);
+
+        }
+
+        //Debug.Log("retabliForest : arbre= " + nbarbre + " caracteristiqueArbre.Count= " + caracteristiqueArbre.Count);
+    }
+
+
+
 }

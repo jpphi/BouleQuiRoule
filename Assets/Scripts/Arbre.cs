@@ -1,4 +1,4 @@
-using System;
+//using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,7 +6,6 @@ using UnityEngine;
 public class Arbre : MonoBehaviour
 {
     [SerializeField] private ScriptableObjectTest _soArbre;
-    [SerializeField] float tempsDePousse = 4f;
 
     bool joyeuAnniversaire = false;
 
@@ -27,8 +26,6 @@ public class Arbre : MonoBehaviour
             StartCoroutine(OnPousse());
             //Debug.Log("Joyeux Anniv! ");
         }
-
-
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -36,7 +33,7 @@ public class Arbre : MonoBehaviour
         Vector3 scale = new Vector3(transform.localScale.x * 0.9f, transform.localScale.y * 0.9f, transform.localScale.z * 0.9f);
 
   
-        Debug.Log("On collision enter tag (GameObject arbre): " + collision.gameObject.tag + " Scale: " + transform.localScale);
+        //Debug.Log("On collision enter tag (GameObject arbre): " + collision.gameObject.tag + " Scale: " + transform.localScale);
         if (collision.gameObject.CompareTag("Proie")) // || collision.gameObject.CompareTag("Predateur")
         {
             //Debug.Log("Arbre touché position = " + transform.position + " sera ajusté à " + scale + 
@@ -48,14 +45,13 @@ public class Arbre : MonoBehaviour
         {
             //Debug.Log("Arbre à détruire = " + transform.position);
 
-            _soArbre.coupeArbre(gameObject);
+            _soArbre.detruitObjet(gameObject);
         }
     }
 
-
     private IEnumerator OnPousse()
     {
-        yield return new WaitForSeconds(tempsDePousse);
+        yield return new WaitForSeconds(_soArbre.tempsDePousse);
 
         joyeuAnniversaire = true;
 
@@ -67,4 +63,20 @@ public class Arbre : MonoBehaviour
         transform.localScale = scale;
 
     }
+
+    //public void coupeArbre(GameObject arbre)
+    //{
+    //    Debug.Log("Couper un arbre à la position " + arbre.transform.position);
+
+    //    for (int i = 0; i < _soArbre.caracteristiqueArbre.Count; i++)
+    //    {
+    //        if (_soArbre.caracteristiqueArbre[i].position == arbre.transform.position)
+    //        {
+    //            Debug.Log("arbre coupé !");
+    //            _soArbre.caracteristiqueArbre.RemoveAt(i);
+    //            break;
+    //        }
+    //    }
+    //}
+
 }

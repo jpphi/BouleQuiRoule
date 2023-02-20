@@ -1,7 +1,7 @@
 using System.Collections;
-using System.Collections.Generic;
+//using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
+//using UnityEngine.UIElements;
 
 public class Proie : MonoBehaviour
 {
@@ -17,11 +17,14 @@ public class Proie : MonoBehaviour
 
     bool joyeuAnniversaire = false;
 
+    public int IndiceProix;
+
     private void Start()
     {
         StartCoroutine(OhVieillir());
 
         _cetObjet = this.gameObject;
+        //Debug.Log("Une nouvelle proie laché indi= " + IndiceProix);
 
     }
     private void Update()
@@ -59,7 +62,7 @@ public class Proie : MonoBehaviour
         {
             //Debug.Log("Proie à détruire = " + transform.position);
 
-            Destroy(gameObject);
+            _soProie.detruitObjet(gameObject);
         }
         else
         {
@@ -81,7 +84,9 @@ public class Proie : MonoBehaviour
             if(croissance.x > _soProie.tailleMaxiProie)
             {
                 transform.localScale = new Vector3(1, 1, 1);
-                _soProie.chargementObjet(gameObject, transform.position, transform.rotation);
+                //_soProie.chargementObjet(gameObject, transform.position, transform.rotation);
+                _soProie.creerObjet(gameObject, transform.position, transform.rotation, new Vector3(1,1,1));
+
             }
             else
             {
