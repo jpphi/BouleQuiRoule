@@ -1,4 +1,3 @@
-//using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -63,20 +62,4 @@ public class Arbre : MonoBehaviour
         transform.localScale = scale;
 
     }
-
-    //public void coupeArbre(GameObject arbre)
-    //{
-    //    Debug.Log("Couper un arbre à la position " + arbre.transform.position);
-
-    //    for (int i = 0; i < _soArbre.caracteristiqueArbre.Count; i++)
-    //    {
-    //        if (_soArbre.caracteristiqueArbre[i].position == arbre.transform.position)
-    //        {
-    //            Debug.Log("arbre coupé !");
-    //            _soArbre.caracteristiqueArbre.RemoveAt(i);
-    //            break;
-    //        }
-    //    }
-    //}
-
 }

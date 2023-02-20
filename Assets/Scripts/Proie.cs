@@ -1,7 +1,5 @@
 using System.Collections;
-//using System.Collections.Generic;
 using UnityEngine;
-//using UnityEngine.UIElements;
 
 public class Proie : MonoBehaviour
 {
@@ -14,7 +12,6 @@ public class Proie : MonoBehaviour
 
     [SerializeField] private ScriptableObjectTest _soProie;
 
-
     bool joyeuAnniversaire = false;
 
     public int IndiceProix;
@@ -22,10 +19,6 @@ public class Proie : MonoBehaviour
     private void Start()
     {
         StartCoroutine(OhVieillir());
-
-        //_cetObjet = this.gameObject;
-        //Debug.Log("Une nouvelle proie laché indi= " + IndiceProix);
-
     }
     private void Update()
     {
@@ -41,10 +34,8 @@ public class Proie : MonoBehaviour
             transform.position = new Vector3(0, 5, 0);
         }
 
-        //transform.position += new Vector3(Random.Range(-0.1f, 0.1f), 0, Random.Range(-0.1f, 0.1f));
         this.GetComponent<Rigidbody>().AddForce(Random.Range(Xmin, Xmax) * _speed * Time.fixedDeltaTime,
             Random.Range(Ymin, Ymax) * Time.fixedDeltaTime, Random.Range(Zmin,Zmax) * _speed * Time.fixedDeltaTime);
-
     }
 
     private IEnumerator OhVieillir()
@@ -86,9 +77,7 @@ public class Proie : MonoBehaviour
             if(croissance.x > _soProie.tailleMaxiProie)
             {
                 transform.localScale = new Vector3(1, 1, 1);
-                //_soProie.chargementObjet(gameObject, transform.position, transform.rotation);
                 _soProie.creerObjet(gameObject, transform.position, transform.rotation, new Vector3(1,1,1));
-
             }
             else
             {

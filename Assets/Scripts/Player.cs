@@ -34,8 +34,9 @@ public class Player : MonoBehaviour
 
         _scoreText.text = ("Score : " + ScoreValue).ToString();
 
-        Debug.Log("Dans awake du level1: _scoreText.text= " + _scoreText.text + " ScoreValue= " + ScoreValue);
+        _scenario.miseAZero();
 
+        Debug.Log("Dans awake du level1: _scoreText.text= " + _scoreText.text + " ScoreValue= " + ScoreValue);
     }
 
     void Start()
@@ -53,14 +54,11 @@ public class Player : MonoBehaviour
             //_scenario.caracteristiqueArbre.Clear();
             //_scenario.caracteristiqueProie.Clear();
             //Debug.Log("Level 1, aprés clear de caracteristique arbre caracteristiqueArbre.Count= " + _scenario.caracteristiqueArbre.Count);
-            _scenario.NbArbre = _scenario.NbProie = 0;
-
         }
 
         if (_scene.buildIndex== 1)
         {
             transform.position = _scenario.positionPlayer;
-            _scenario.NbArbre = _scenario.NbProie = 0;
 
             // On charge les arbres
             retabliForet(_arbre);
@@ -71,7 +69,7 @@ public class Player : MonoBehaviour
                 _scenario.creerObjet(_proie, new Vector3(Random.Range(-10f, 10f), Random.Range(1f, 5f), Random.Range(-10f, 10f)),
                     Quaternion.identity, new Vector3(1,1,1) );
 
-                _scenario.NbProie++;
+                //_scenario.NbProie++;
 
             }
             //_scenario.lancerLesProies(_proie);
@@ -79,7 +77,7 @@ public class Player : MonoBehaviour
 
         if (_scene.buildIndex == 2)
         {
-            _scenario.NbArbre = _scenario.NbProie = 0;
+            //_scenario.NbArbre = _scenario.NbProie = 0;
 
             //listeproie = GameObject.FindGameObjectsWithTag("Proie");
 
@@ -88,10 +86,9 @@ public class Player : MonoBehaviour
 
             lanceProies(_proie);
 
-            Debug.Log("Level 3. Nombre de proies= " + _scenario.NbProie + " Nombre arbre " + _scenario.NbArbre);
+            Debug.Log("Level 3. Nombre de proies= " + _scenario.caracteristiqueProie.Count + " Nombre arbre " + 
+                _scenario.caracteristiqueArbre.Count);
         }
-
-
 
     }
 
@@ -129,7 +126,7 @@ public class Player : MonoBehaviour
             //Debug.Log("Target_Trigger touché position = " + other.transform.position);
 
             _scenario.creerObjet(_arbre, other.transform.position, other.transform.rotation, new Vector3(1,1,1));
-            _scenario.NbArbre++;
+            //_scenario.NbArbre++;
 
             _scenario.detruitObjet(other.gameObject);
 
@@ -145,7 +142,6 @@ public class Player : MonoBehaviour
             //Debug.Log("Target touché position = " + collision.transform.position);
 
             _scenario.creerObjet(_arbre, collision.transform.position, collision.transform.rotation, new Vector3(1, 1, 1));
-            _scenario.NbArbre++;
 
             _scenario.detruitObjet(collision.gameObject);
 
@@ -262,7 +258,7 @@ public class Player : MonoBehaviour
 
         Debug.Log("On rentre dans retabliForet caracteristiqueArbre.Count= " + _scenario.caracteristiqueArbre.Count);
 
-        for (int i = 0, NbArbre= 0; (i < _scenario.caracteristiqueArbre.Count) && (i < _scenario.maxArbre); i++, NbArbre++)
+        for (int i = 0; i < _scenario.caracteristiqueArbre.Count; i++)
         {
             _scenario.creerObjet(arbre, _scenario.caracteristiqueArbre[i].position, _scenario.caracteristiqueArbre[i].rotation, 
                 _scenario.caracteristiqueArbre[i].scale);
@@ -276,7 +272,7 @@ public class Player : MonoBehaviour
 
         Debug.Log("On lance les proies caracteristiqueProie.Count= " + _scenario.caracteristiqueProie.Count);
 
-        for (int i = 0, NbProie= 0; (i < _scenario.caracteristiqueProie.Count) && (i < _scenario.maxProie); i++, NbProie++)
+        for (int i = 0; i < _scenario.caracteristiqueProie.Count; i++)
         {
             //chargementObjet(arbre, caracteristiqueArbre[i].position, caracteristiqueArbre[i].rotation);
             _scenario.creerObjet(proie, _scenario.caracteristiqueProie[i].position, _scenario.caracteristiqueProie[i].rotation,
