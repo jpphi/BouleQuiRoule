@@ -165,5 +165,7 @@ MonoBehaviour:
   Ymax: 1
   Zmin: -10
   Zmax: 10
+  _arbre: {fileID: 8241269057746280033, guid: 0f4f13b233413ef4eb7630a9e431744b, type: 3}
   tictac: 3
   _soProie: {fileID: 11400000, guid: 3370110c96a29dc408e13a3f0bf46fa8, type: 2}
+  IndiceProix: 0
