@@ -1,9 +1,8 @@
 //using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
+//using Unity.VisualScripting;
 using UnityEngine;
-using static UnityEditor.PlayerSettings;
-using UnityEngine.UIElements;
+//using UnityEngine.UIElements;
 //using static UnityEditor.PlayerSettings;
 
 
@@ -79,7 +78,7 @@ public class ScriptableObjectTest : ScriptableObject
     {
         GameObject objcree;
 
-        Debug.Log("Créée l'objet " + obj.name + " position " + obj.transform.position + " scale " + obj.transform.localScale);
+        //Debug.Log("Créée l'objet " + obj.name + " position " + obj.transform.position + " scale " + obj.transform.localScale);
 
 
         if (obj.CompareTag("Arbre") && (NbArbre < maxArbre))
@@ -100,7 +99,7 @@ public class ScriptableObjectTest : ScriptableObject
     }
     public void detruitObjet(GameObject obj)
     {
-        Debug.Log("Détruit Objet " + obj.name + " position " + obj.transform.position + " scale " + obj.transform.localScale);
+        //Debug.Log("Détruit Objet " + obj.name + " position " + obj.transform.position + " scale " + obj.transform.localScale);
 
         if (obj.CompareTag("Arbre"))
         {

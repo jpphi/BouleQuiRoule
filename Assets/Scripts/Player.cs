@@ -1,13 +1,3 @@
-//using System.Collections;
-//using System.Collections.Generic;
-//using System.Collections;
-//using Unity.VisualScripting;
-//using static UnityEditor.PlayerSettings;
-//using static UnityEditor.PlayerSettings;
-//using UnityEngine.UIElements;
-//using static UnityEditor.PlayerSettings;
-//using UnityEngine.UIElements;
-
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
@@ -17,8 +7,7 @@ using UnityEngine.UI;
 public class Player : MonoBehaviour
 {
     private Rigidbody _rigidbody;
-    private int ScoreValue = 0;
-    private int ScorePrec = 0;
+    private int ScoreValue;
 
     [SerializeField] private TMP_Text _scoreText;
     [SerializeField] private float _speed= 100f;
@@ -30,7 +19,7 @@ public class Player : MonoBehaviour
 
     public Scene _scene;
 
-    public static Player instance;
+    //public static Player instance;
 
     private float mouvx, mouvy;
     public float _sliderValue;
@@ -39,18 +28,13 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
-        instance= this;
+        //instance= this;
         ScoreValue = PlayerPrefs.GetInt("_score", 0);
-
-        ScorePrec= ScoreValue;
-        Debug.Log("updateScore scoreValue= " + ScoreValue);
         PlayerPrefs.SetInt("_score", ScoreValue);
 
         _scoreText.text = ("Score : " + ScoreValue).ToString();
 
-        //_scoreText.text.ForceMeshUpdate(true);
-
-        Debug.Log("Dans awake du level1: _scoreText.text= " + _scoreText.text);
+        Debug.Log("Dans awake du level1: _scoreText.text= " + _scoreText.text + " ScoreValue= " + ScoreValue);
 
     }
 
@@ -63,7 +47,6 @@ public class Player : MonoBehaviour
         //Debug.Log("La scène active est '" + _scene.name + "'. index= " + _scene.buildIndex +
         //    " Vitesse = " + _speed);
 
-        //_scenario.chargementObjet(_player, new Vector3(0, 3, 0), Quaternion.identity);
         if (_scene.buildIndex == 0)
         {
             // On s'assure que les listes sont vides
@@ -85,9 +68,6 @@ public class Player : MonoBehaviour
             // On crée et on lance les proies
             for(int i= 0; i < 8; i++)
             {
-                //_scenario.chargementObjet(_proie, new Vector3(Random.Range(-10f, 10f), Random.Range(1f, 5f), Random.Range(-10f, 10f)), 
-                //    Quaternion.identity);
-
                 _scenario.creerObjet(_proie, new Vector3(Random.Range(-10f, 10f), Random.Range(1f, 5f), Random.Range(-10f, 10f)),
                     Quaternion.identity, new Vector3(1,1,1) );
 
@@ -101,13 +81,14 @@ public class Player : MonoBehaviour
         {
             _scenario.NbArbre = _scenario.NbProie = 0;
 
-            Debug.Log("Level 3");
             //listeproie = GameObject.FindGameObjectsWithTag("Proie");
 
             // On charge les arbres
             retabliForet(_arbre);
 
             lanceProies(_proie);
+
+            Debug.Log("Level 3. Nombre de proies= " + _scenario.NbProie + " Nombre arbre " + _scenario.NbArbre);
         }
 
 
