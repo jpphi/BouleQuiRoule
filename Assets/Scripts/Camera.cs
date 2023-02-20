@@ -11,7 +11,7 @@ public class Camera : MonoBehaviour
     void Start()
     {
         rot= Quaternion.Euler(90,0,0);
-        offset= new Vector3(0,20,0);
+        offset= new Vector3(0,70,0);
         //rot= transform.rotation;
         transform.position = offset;
         transform.rotation = rot;
