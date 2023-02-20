@@ -65,7 +65,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 856e718889401914c8131a93df1c3cac, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -134,10 +134,10 @@ MonoBehaviour:
   _player: {fileID: 2472624905697260548}
   _proie: {fileID: 8526240394462175678, guid: 2bd859ec2f6f34247832e7658fc0cc5e, type: 3}
   _scenario: {fileID: 11400000, guid: 3370110c96a29dc408e13a3f0bf46fa8, type: 2}
-  _scrollbar: {fileID: 8426332018127393376, guid: 3452a056b5f383742a67075ce3ad3586, type: 3}
+  _slider: {fileID: 0}
   _scene:
     m_Handle: 0
-  _scrollbarValue: 0
+  _sliderValue: 0
 --- !u!114 &2962659708776220826
 MonoBehaviour:
   m_ObjectHideFlags: 0
