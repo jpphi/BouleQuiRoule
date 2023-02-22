@@ -14,7 +14,7 @@ public class Player : MonoBehaviour
     public Scene _scene;
 
     private Rigidbody _rigidbody;
-    private int ScoreValue;
+    //private int ScoreValue;
 
     //public static Player instance;
 
@@ -25,14 +25,13 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         //instance= this;
-        ScoreValue = PlayerPrefs.GetInt("_score", 0);
-        PlayerPrefs.SetInt("_score", ScoreValue);
-
-        _scoreText.text = ("Score : " + ScoreValue).ToString();
+        //ScoreValue = PlayerPrefs.GetInt("_score", 0);
+        //_scoreText.text = ("Score : " + ScoreValue).ToString();
 
         _scenario.miseAZero();
-
-        Debug.Log("Dans awake du level1: _scoreText.text= " + _scoreText.text + " ScoreValue= " + ScoreValue);
+        //_scenario.nouveauScore= 0;
+        //Debug.Log("Dans awake du level1: _scoreText.text= " + _scoreText.text + " ScoreValue= " + ScoreValue);
+        //Debug.Log("Dans awake du level1: _scoreText.text= " + _scoreText.text + " _scenario.nouveauScore= " + _scenario.nouveauScore);
     }
 
     void Start()
@@ -42,8 +41,7 @@ public class Player : MonoBehaviour
 
         _scene = SceneManager.GetActiveScene();
 
-        Debug.Log("La scène active est '" + _scene.name + "'. index= " + _scene.buildIndex +
-            " Vitesse = " + _speed);
+        //Debug.Log("La scène active est '" + _scene.name + "'. index= " + _scene.buildIndex + " Vitesse = " + _speed);
 
         if (_scene.buildIndex == 1)
         {
@@ -81,8 +79,8 @@ public class Player : MonoBehaviour
 
             Debug.Log("Level 3. Nombre de proies= " + _scenario.caracteristiqueProie.Count + " Nombre arbre " + 
                 _scenario.caracteristiqueArbre.Count);
-        }
 
+        }
     }
 
     void Update()
@@ -132,6 +130,13 @@ public class Player : MonoBehaviour
 
         }
 
+        if ( (_scenario.NbProie <= 0) && (_scene.buildIndex== 3) )
+        {
+            SceneManager.LoadScene("LaFin");
+
+        }
+
+
     }
 
     public void OnMove(InputValue _input)
@@ -174,16 +179,16 @@ public class Player : MonoBehaviour
     }
     private void updateScore()
     {
-        ScoreValue= PlayerPrefs.GetInt("_score");
-        ScoreValue++;
+        //ScoreValue= PlayerPrefs.GetInt("_score");
+        //ScoreValue++;
+        _scenario.nouveauScore++;
         //Debug.Log("updateScore scoreValue= " + ScoreValue);
-        PlayerPrefs.SetInt("_score", ScoreValue);
+        //PlayerPrefs.SetInt("_score", ScoreValue);
 
-        _scoreText.text = "Score : " + ScoreValue.ToString();
-        //Debug.Log("_scoreText.text= " + _scoreText.text);
+        _scoreText.text = "Score : " + _scenario.nouveauScore.ToString();
 
         //Debug.Log("updateScore après ++ " + ScoreValue);
-        if (ScoreValue == 8)
+        if (_scenario.nouveauScore == 8)
         {
             _scenario.caracteristiqueArbre.Clear();
             _scenario.positionPlayer = transform.position;
@@ -201,7 +206,7 @@ public class Player : MonoBehaviour
             //    SceneManager.GetActiveScene().buildIndex);
         }
 
-        else if (ScoreValue == 16)
+        else if (_scenario.nouveauScore == 16)
         {
             _scenario.positionPlayer = transform.position;
             _scenario.caracteristiqueArbre.Clear();
@@ -232,9 +237,10 @@ public class Player : MonoBehaviour
     private void OnApplicationQuit()
     {
         // Détruire la clé PlayerPref
-        PlayerPrefs.DeleteKey("_score");
-        Debug.Log("La clé doit être détruite ");
-        _scoreText.text = "";
+        //PlayerPrefs.DeleteKey("_score");
+        //Debug.Log("La clé doit être détruite ");
+        //_scoreText.text = "";
+        //_scenario.nouveauScore= 0;
     }
 
     public void EnregistrementObjet(GameObject obj, Vector3 pos, Quaternion rot, Vector3 scale)
@@ -263,8 +269,6 @@ public class Player : MonoBehaviour
             });
 
         }
-
-
     }
 
     public void retabliForet(GameObject arbre)

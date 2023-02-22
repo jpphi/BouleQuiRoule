@@ -19,6 +19,7 @@ public class Menu : MonoBehaviour
         //_somenu.vitesseJoueur = ;
         _soMenu.vitesseProie= _sliderProie.GetComponent<Slider>().value;
         _soMenu.vitesseJoueur= _sliderPlayer.GetComponent<Slider>().value;
+        _soMenu.nouveauScore = 0;
 
     }
 

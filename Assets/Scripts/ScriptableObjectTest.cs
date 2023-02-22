@@ -30,9 +30,9 @@ public class ScriptableObjectTest : ScriptableObject
 
     // Arbres
     public List<CaracteristiqueArbre> caracteristiqueArbre; //= new List<CaracteristiqueArbre>();
-    private int maxArbre = 100;
+    private int maxArbre = 200;
     public float tempsDePousse = 4f;
-    private int NbArbre;
+    public int NbArbre;
 
     //public int stockNouritureAuDepartArbre = 100;
     public float tailleMiniXArbre = 0.2f;
@@ -44,7 +44,7 @@ public class ScriptableObjectTest : ScriptableObject
 
     // Proies
     public List<CaracteristiqueProie> caracteristiqueProie;// = new List<CaracteristiqueProie>();
-    private int NbProie;
+    public int NbProie;
     public float decroissanceProie = 0.9f;
     public float croissanceProie = 1.15f;
     //public int stockNouritureAuDepartProie = 10;
@@ -55,6 +55,7 @@ public class ScriptableObjectTest : ScriptableObject
     public float tailleMaxiProie = 2f;
 
     private int maxProie = 200;
+    public float vitesseProie;
 
     // Prédateur et Player
     //public int stockNouritureAuDepartPredateur = 100;
@@ -62,8 +63,7 @@ public class ScriptableObjectTest : ScriptableObject
 
     // Autre
     public float vitesseJoueur;
-    public float vitesseProie;
-
+    public int nouveauScore = 0;
 
     public void creerObjet(GameObject obj, Vector3 pos, Quaternion rot, Vector3 scale)
     {
@@ -90,13 +90,14 @@ public class ScriptableObjectTest : ScriptableObject
     }
     public void detruitObjet(GameObject obj)
     {
-        //Debug.Log("Détruit Objet " + obj.name + " position " + obj.transform.position + " scale " + obj.transform.localScale);
+        //Debug.Log("Détruit Objet " + obj.name + " objet tag " + obj.tag + " position " + obj.transform.position +
+        //    " scale " + obj.transform.localScale);
 
         if (obj.CompareTag("Arbre"))
         {
             NbArbre--;
         }
-        else if (obj.CompareTag("Proie") && (NbProie < maxProie))
+        else if (obj.CompareTag("Proie"))
         {
             NbProie--;
         }
