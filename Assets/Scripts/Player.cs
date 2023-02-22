@@ -77,8 +77,8 @@ public class Player : MonoBehaviour
 
             lanceProies(_proie);
 
-            Debug.Log("Level 3. Nombre de proies= " + _scenario.caracteristiqueProie.Count + " Nombre arbre " + 
-                _scenario.caracteristiqueArbre.Count);
+            //Debug.Log("Level 3. Nombre de proies= " + _scenario.caracteristiqueProie.Count + " Nombre arbre " + 
+            //    _scenario.caracteristiqueArbre.Count);
 
         }
     }
