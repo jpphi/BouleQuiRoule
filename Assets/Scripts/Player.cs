@@ -2,27 +2,23 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
-using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
-    private Rigidbody _rigidbody;
-    private int ScoreValue;
-
     [SerializeField] private TMP_Text _scoreText;
-    [SerializeField] private float _speed= 100f;
     [SerializeField] private GameObject _arbre, _player, _proie;
     [SerializeField] private ScriptableObjectTest _scenario;
-    [SerializeField] private GameObject _slider;
 
     public PlayerPrefs _score;
 
     public Scene _scene;
 
+    private Rigidbody _rigidbody;
+    private int ScoreValue;
+
     //public static Player instance;
 
-    private float mouvx, mouvy;
-    public float _sliderValue;
+    private float mouvx, mouvy, _speed;
 
     private GameObject[] listeproie, listearbre;
 
@@ -42,13 +38,14 @@ public class Player : MonoBehaviour
     void Start()
     {
         _rigidbody = GetComponent<Rigidbody>();
+        _speed = _scenario.vitesseJoueur;
 
         _scene = SceneManager.GetActiveScene();
 
-        //Debug.Log("La scène active est '" + _scene.name + "'. index= " + _scene.buildIndex +
-        //    " Vitesse = " + _speed);
+        Debug.Log("La scène active est '" + _scene.name + "'. index= " + _scene.buildIndex +
+            " Vitesse = " + _speed);
 
-        if (_scene.buildIndex == 0)
+        if (_scene.buildIndex == 1)
         {
             // On s'assure que les listes sont vides
             //_scenario.caracteristiqueArbre.Clear();
@@ -56,7 +53,7 @@ public class Player : MonoBehaviour
             //Debug.Log("Level 1, aprés clear de caracteristique arbre caracteristiqueArbre.Count= " + _scenario.caracteristiqueArbre.Count);
         }
 
-        if (_scene.buildIndex== 1)
+        if (_scene.buildIndex== 2)
         {
             transform.position = _scenario.positionPlayer;
 
@@ -68,14 +65,10 @@ public class Player : MonoBehaviour
             {
                 _scenario.creerObjet(_proie, new Vector3(Random.Range(-10f, 10f), Random.Range(1f, 5f), Random.Range(-10f, 10f)),
                     Quaternion.identity, new Vector3(1,1,1) );
-
-                //_scenario.NbProie++;
-
             }
-            //_scenario.lancerLesProies(_proie);
         }
 
-        if (_scene.buildIndex == 2)
+        if (_scene.buildIndex == 3)
         {
             //_scenario.NbArbre = _scenario.NbProie = 0;
 
@@ -101,12 +94,42 @@ public class Player : MonoBehaviour
 
         if (mouvx != 0f || mouvy != 0f)
         {
+
             _rigidbody.AddForce(mouvx * _speed * Time.fixedDeltaTime, 0f, mouvy * _speed * Time.fixedDeltaTime);
+            //_rigidbody.velocity=  new Vector3 (mouvx * _speed * Time.fixedDeltaTime, 0f, mouvy * _speed * Time.fixedDeltaTime);
+
         }
 
+        // Remise en jeu du players
         if (transform.position.y <= -2)
         {
             transform.position= new Vector3(0,5,0);
+        }
+
+        if (Input.touchCount >0)
+        {
+            Touch touch= Input.GetTouch(0);
+
+            //Debug.Log("Surface touché");
+
+            //if (touch.phase == UnityEngine.TouchPhase.Began)
+            //{
+            //    Debug.Log("Surface touché, Began : " + touch.position);
+            //}
+            //if (touch.phase == UnityEngine.TouchPhase.Ended)
+            //{
+            //    Debug.Log("Surface touché, End : " + touch.position);
+            //}
+            //if (touch.phase == UnityEngine.TouchPhase.Moved)
+            //{
+            //    Debug.Log("Surface touché, on bouge : " + touch.position);
+            //}
+
+            Debug.Log("Delta Position " + touch.deltaPosition);
+            _rigidbody.AddForce(touch.deltaPosition.x * _speed * Time.fixedDeltaTime, 0f, touch.deltaPosition.y * _speed * Time.fixedDeltaTime);
+            //_rigidbody.velocity= new Vector3(touch.deltaPosition.x * _speed * Time.fixedDeltaTime, 0f,
+            //  touch.deltaPosition.y * _speed * Time.fixedDeltaTime);
+
         }
 
     }
@@ -153,11 +176,11 @@ public class Player : MonoBehaviour
     {
         ScoreValue= PlayerPrefs.GetInt("_score");
         ScoreValue++;
-        Debug.Log("updateScore scoreValue= " + ScoreValue);
+        //Debug.Log("updateScore scoreValue= " + ScoreValue);
         PlayerPrefs.SetInt("_score", ScoreValue);
 
         _scoreText.text = "Score : " + ScoreValue.ToString();
-        Debug.Log("_scoreText.text= " + _scoreText.text);
+        //Debug.Log("_scoreText.text= " + _scoreText.text);
 
         //Debug.Log("updateScore après ++ " + ScoreValue);
         if (ScoreValue == 8)
@@ -187,10 +210,10 @@ public class Player : MonoBehaviour
             listeproie = GameObject.FindGameObjectsWithTag("Proie");
             listearbre = GameObject.FindGameObjectsWithTag("Arbre");
 
-            foreach (GameObject p in listeproie)
+            foreach (GameObject el in listeproie)
             {
                 //Debug.Log("objet: " + el.tag + " Nom de l'objet " + el.name);
-                EnregistrementObjet(p, p.transform.position, p.transform.rotation, p.transform.localScale);
+                EnregistrementObjet(el, el.transform.position, el.transform.rotation, el.transform.localScale);
             }
 
 
@@ -204,14 +227,6 @@ public class Player : MonoBehaviour
             //Debug.Log("Chargement de la scene 2.  SceneManager.GetActiveScene()" + SceneManager.GetActiveScene().name + " " +
             //    SceneManager.GetActiveScene().buildIndex);
         }
-    }
-
-    public void changeVitesse()
-    {
-        //Debug.Log("Changement de la vitesse" + _slider.GetComponent<Slider>().value);
-
-        // _scrollbar.GetComponent<Scrollbar>().value
-        _speed= _slider.GetComponent<Slider>().value;  
     }
 
     private void OnApplicationQuit()
@@ -256,7 +271,7 @@ public class Player : MonoBehaviour
     {
         //int nbarbre = 0;
 
-        Debug.Log("On rentre dans retabliForet caracteristiqueArbre.Count= " + _scenario.caracteristiqueArbre.Count);
+        //Debug.Log("On rentre dans retabliForet caracteristiqueArbre.Count= " + _scenario.caracteristiqueArbre.Count);
 
         for (int i = 0; i < _scenario.caracteristiqueArbre.Count; i++)
         {
@@ -270,7 +285,7 @@ public class Player : MonoBehaviour
     {
         //int nbarbre = 0;
 
-        Debug.Log("On lance les proies caracteristiqueProie.Count= " + _scenario.caracteristiqueProie.Count);
+        //Debug.Log("On lance les proies caracteristiqueProie.Count= " + _scenario.caracteristiqueProie.Count);
 
         for (int i = 0; i < _scenario.caracteristiqueProie.Count; i++)
         {

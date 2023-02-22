@@ -1,9 +1,13 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Proie : MonoBehaviour
 {
-    float _speed = 100f;
+
+    private float _speed;
+    // float _speed = 100f;
+
     [SerializeField] float Xmin = -10f, Xmax = 10f, Ymin = 0f, Ymax = 1f, Zmin = -10f, Zmax = 10f;
     [SerializeField] GameObject _arbre;
 
@@ -12,6 +16,9 @@ public class Proie : MonoBehaviour
 
     [SerializeField] private ScriptableObjectTest _soProie;
 
+    private Rigidbody rbProie;
+
+
     bool joyeuAnniversaire = false;
 
     public int IndiceProix;
@@ -19,6 +26,9 @@ public class Proie : MonoBehaviour
     private void Start()
     {
         StartCoroutine(OhVieillir());
+        _speed = _soProie.vitesseProie;
+        rbProie = GetComponent<Rigidbody>();
+
     }
     private void Update()
     {
@@ -34,8 +44,10 @@ public class Proie : MonoBehaviour
             transform.position = new Vector3(0, 5, 0);
         }
 
-        this.GetComponent<Rigidbody>().AddForce(Random.Range(Xmin, Xmax) * _speed * Time.fixedDeltaTime,
+        rbProie.AddForce(Random.Range(Xmin, Xmax) * _speed * Time.fixedDeltaTime,
             Random.Range(Ymin, Ymax) * Time.fixedDeltaTime, Random.Range(Zmin,Zmax) * _speed * Time.fixedDeltaTime);
+        //rbProie.velocity = new Vector3(Random.Range(Xmin, Xmax) * _speed * Time.fixedDeltaTime,
+        //    Random.Range(Ymin, Ymax) * Time.fixedDeltaTime, Random.Range(Zmin, Zmax) * _speed * Time.fixedDeltaTime);
     }
 
     private IEnumerator OhVieillir()

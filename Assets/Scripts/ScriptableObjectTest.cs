@@ -60,12 +60,17 @@ public class ScriptableObjectTest : ScriptableObject
     //public int stockNouritureAuDepartPredateur = 100;
     public Vector3 positionPlayer;
 
+    // Autre
+    public float vitesseJoueur;
+    public float vitesseProie;
+
+
     public void creerObjet(GameObject obj, Vector3 pos, Quaternion rot, Vector3 scale)
     {
         GameObject objcree;
 
-        Debug.Log("Créée l'objet " + obj.name + " position " + obj.transform.position + " scale " + obj.transform.localScale +
-            " Tag= " + obj.tag + " NbArbre= " + NbArbre + " NbProie= " + NbProie);
+        //Debug.Log("Créée l'objet " + obj.name + " position " + obj.transform.position + " scale " + obj.transform.localScale +
+        //    " Tag= " + obj.tag + " NbArbre= " + NbArbre + " NbProie= " + NbProie);
 
         if (obj.CompareTag("Arbre") && (NbArbre < maxArbre))
         {
