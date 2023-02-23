@@ -9,6 +9,8 @@ TagManager:
   - Proie
   - Predateur
   - Arbre
+  - Portail1
+  - Portail2
   layers:
   - Default
   - TransparentFX

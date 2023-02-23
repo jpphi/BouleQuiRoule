@@ -32,6 +32,7 @@ public class Player : MonoBehaviour
         //_scenario.nouveauScore= 0;
         //Debug.Log("Dans awake du level1: _scoreText.text= " + _scoreText.text + " ScoreValue= " + ScoreValue);
         //Debug.Log("Dans awake du level1: _scoreText.text= " + _scoreText.text + " _scenario.nouveauScore= " + _scenario.nouveauScore);
+        Debug.Log("Awake");
     }
 
     void Start()
@@ -132,11 +133,10 @@ public class Player : MonoBehaviour
 
         if ( (_scenario.NbProie <= 0) && (_scene.buildIndex== 3) )
         {
-            SceneManager.LoadScene("LaFin");
-
+            // En mode debug sinon supprimer _speed et décommenter la ligne
+            _speed = 150f;
+            //SceneManager.LoadScene("LaFin");
         }
-
-
     }
 
     public void OnMove(InputValue _input)
@@ -149,6 +149,7 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        //Debug.Log("On collision enter tag: " + other.gameObject.tag);
         if (other.gameObject.CompareTag("Target_Trigger"))
         {
             //Debug.Log("Target_Trigger touché position = " + other.transform.position);
@@ -164,7 +165,7 @@ public class Player : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        // Debug.Log("On collision enter tag: " + collision.gameObject.tag);
+        Debug.Log("On collision enter tag: " + collision.gameObject.tag);
         if (collision.gameObject.CompareTag("Target") || collision.gameObject.CompareTag("Proie"))
         {
             //Debug.Log("Target touché position = " + collision.transform.position);
@@ -174,6 +175,20 @@ public class Player : MonoBehaviour
             _scenario.detruitObjet(collision.gameObject);
 
             updateScore();
+        }
+        else if (collision.gameObject.CompareTag("Portail1"))
+        {
+            //Debug.Log("collision portail1");
+            //Vector3 destination= GameObject.Find("Portail2").transform.position + new Vector3(0, 1, 0);
+            transform.position = new Vector3(0,101,0);
+
+        }
+        else if (collision.gameObject.CompareTag("Portail2"))
+        {
+            //Debug.Log("collision portail 2");
+            //Vector3 destination = GameObject.Find("Portail1").transform.position + new Vector3(0, 1, 0);
+            transform.position = new Vector3(0, 1, 0);
+
         }
 
     }
